@@ -5,8 +5,8 @@
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <AssemblyVersion>2026.11.13.2</AssemblyVersion>
-    <FileVersion>2026.11.13.2</FileVersion>
+    <AssemblyVersion>2026.11.13.3</AssemblyVersion>
+    <FileVersion>2026.11.13.3</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />

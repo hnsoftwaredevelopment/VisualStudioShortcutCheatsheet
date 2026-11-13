@@ -5,6 +5,8 @@
     <Identity Id="ShortcutCheatsheet.ED53A846-F063-4888-8948-8699842C868F" Version="0.1.0" Language="en-US" Publisher="Herbert Nijkamp" />
     <DisplayName>Shortcut Cheatsheet</DisplayName>
     <Description xml:space="preserve">A cheat sheet of every keyboard shortcut in your Visual Studio: grouped by where it works, with the extension that adds it, your own changes and conflicts. Export to PNG, PDF, HTML, Markdown, CSV, JSON or XML.</Description>
+    <Icon>Resources\Icon-128.png</Icon>
+    <PreviewImage>Resources\Icon-256.png</PreviewImage>
     <Tags>keyboard, shortcuts, key bindings, cheat sheet, hotkeys, export, pdf</Tags>
   </Metadata>
   <Installation>

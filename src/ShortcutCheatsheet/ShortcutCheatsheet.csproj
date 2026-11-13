@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>18.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">18.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <AssemblyVersion>2026.11.13.2</AssemblyVersion>
+    <AssemblyVersion>2026.11.13.3</AssemblyVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -52,6 +52,17 @@
     <Compile Include="CommandTables\CommandTableResource.cs" />
     <Compile Include="CommandTables\CtoDecompressor.cs" />
     <Compile Include="CommandTables\PkgdefMenus.cs" />
+    <Compile Include="Collecting\CheatSheetCollector.cs" />
+    <Compile Include="Collecting\Customizations.cs" />
+    <Compile Include="Collecting\DteBindingReader.cs" />
+    <Compile Include="Collecting\RawBinding.cs" />
+    <Compile Include="Export\JsonExporter.cs" />
+    <Compile Include="Model\CheatSheet.cs" />
+    <Compile Include="Model\CheatSheetBuilder.cs" />
+    <Compile Include="Model\CommandNames.cs" />
+    <Compile Include="Origin\ExtensionCommands.cs" />
+    <Compile Include="Origin\ManifestInfo.cs" />
+    <Compile Include="Origin\PkgdefPackages.cs" />
     <Compile Include="ShortcutCheatsheetPackage.cs" />
     <Compile Include="ToolWindow\CheatsheetWindow.cs" />
   </ItemGroup>
@@ -59,6 +70,18 @@
     <VSCTCompile Include="ShortcutCheatsheetPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Icon: Resources\ShortcutCheatsheet.svg is the source, the PNG files are exports of it. -->
+    <Content Include="Resources\Icon-128.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\Icon-256.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="Resources\Icon-32.png" />
+    <None Include="Resources\Icon-90.png" />
+    <None Include="Resources\ShortcutCheatsheet.svg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
@@ -70,6 +93,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Design" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
     <Reference Include="System.ComponentModel.Composition" />
