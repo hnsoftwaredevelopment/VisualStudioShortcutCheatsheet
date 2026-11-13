@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <!-- Never change the Id: Visual Studio uses it to recognize updates. -->
+    <Identity Id="ShortcutCheatsheet.ED53A846-F063-4888-8948-8699842C868F" Version="0.1.0" Language="en-US" Publisher="Herbert Nijkamp" />
+    <DisplayName>Shortcut Cheatsheet</DisplayName>
+    <Description xml:space="preserve">A cheat sheet of every keyboard shortcut in your Visual Studio: grouped by where it works, with the extension that adds it, your own changes and conflicts. Export to PNG, PDF, HTML, Markdown, CSV, JSON or XML.</Description>
+    <Tags>keyboard, shortcuts, key bindings, cheat sheet, hotkeys, export, pdf</Tags>
+  </Metadata>
+  <Installation>
+    <!-- Visual Studio 2026 (18.x) only. -->
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[18.0,19.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[18.0,19.0)">
+      <ProductArchitecture>arm64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[18.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+  </Assets>
+</PackageManifest>

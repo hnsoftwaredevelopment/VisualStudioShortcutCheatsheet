@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <Include href="KnownImageIds.vsct" />
+
+  <Commands package="guidShortcutCheatsheetPackage">
+    <Buttons>
+      <!-- View > Other Windows > Shortcut Cheatsheet. Always visible, so VS loads the package when it is clicked. -->
+      <Button guid="guidShortcutCheatsheetCmdSet" id="cmdidOpenWindow" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="ImageCatalogGuid" id="Keyboard" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Shortcut Cheatsheet</ButtonText>
+          <CanonicalName>.View.ShortcutCheatsheet</CanonicalName>
+          <LocCanonicalName>.View.ShortcutCheatsheet</LocCanonicalName>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidShortcutCheatsheetPackage" value="{acf2e531-e047-4046-9f60-a0765ab33ef5}" />
+    <GuidSymbol name="guidShortcutCheatsheetCmdSet" value="{c239636b-81ce-4645-9854-f50b92eb121c}">
+      <IDSymbol name="cmdidOpenWindow" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

@@ -1,0 +1,3 @@
+[submodule "external/ExtensionCommon"]
+	path = external/ExtensionCommon
+	url = https://github.com/hnsoftwaredevelopment/ExtensionCommon.git
