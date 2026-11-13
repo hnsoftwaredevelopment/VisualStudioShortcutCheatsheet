@@ -21,7 +21,9 @@ foreach ($source in Get-ChildItem (Join-Path $root 'tests\Fixtures\CommandTables
     $decompiled = [IO.Path]::ChangeExtension($source.FullName, '.decompiled.vsct')
     & $vsct $source.FullName $cto "-I$tools\inc" | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "VSCT failed for $($source.Name)" }
-    & $vsct $cto $decompiled | Out-Null
+    # VSCT writes the .h of a decompile into the current folder, so run it from the fixture folder.
+    Push-Location $source.DirectoryName
+    try { & $vsct $cto $decompiled | Out-Null } finally { Pop-Location }
     if ($LASTEXITCODE -ne 0) { throw "Decompiling $($source.Name) failed" }
     "{0} -> {1} ({2} bytes)" -f $source.Name, (Split-Path $cto -Leaf), (Get-Item $cto).Length
 }
