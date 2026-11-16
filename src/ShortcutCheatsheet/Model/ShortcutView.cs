@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace ShortcutCheatsheet.Model
 {
-    /// <summary>How the list is grouped.</summary>
-    internal enum Grouping
+    /// <summary>How the list is grouped. Public because the options page shows it.</summary>
+    public enum Grouping
     {
         Scope,
         Category,

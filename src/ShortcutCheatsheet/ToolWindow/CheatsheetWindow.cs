@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
 using ShortcutCheatsheet.Collecting;
 using ShortcutCheatsheet.Export;
+using ShortcutCheatsheet.Options;
 using Task = System.Threading.Tasks.Task;
 
 namespace ShortcutCheatsheet.ToolWindow
@@ -31,6 +32,30 @@ namespace ShortcutCheatsheet.ToolWindow
             _control.RefreshRequested += (s, e) => StartLoading();
             _control.ExportRequested += (s, e) => { ThreadHelper.ThrowIfNotOnUIThread(); Export(); };
             Content = _control;
+
+            _grouping = SettingsService.Current.Grouping;
+            _model.Grouping = _grouping;
+            SettingsService.Changed += OnSettingsChanged;
+        }
+
+        /// <summary>The grouping from the options, to see whether that setting changed.</summary>
+        private Model.Grouping _grouping;
+
+        /// <summary>A new default grouping in the options also applies to the open window; other changes leave it alone.</summary>
+        private void OnSettingsChanged(object sender, EventArgs e)
+        {
+            var grouping = SettingsService.Current.Grouping;
+            if (grouping == _grouping)
+                return;
+            _grouping = grouping;
+            _model.Grouping = grouping;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                SettingsService.Changed -= OnSettingsChanged;
+            base.Dispose(disposing);
         }
 
         /// <summary>Called by VS after the pane is sited; Package is known here, not in the constructor.</summary>
@@ -106,7 +131,7 @@ namespace ShortcutCheatsheet.ToolWindow
                 : dialog.FileName;
             try
             {
-                var files = Exporter.Write(document, format, path, new RenderOptions());
+                var files = Exporter.Write(document, format, path, SettingsService.Current.ToRenderOptions());
                 _model.Summary = files.Count == 1
                     ? "Saved " + Path.GetFileName(files[0]) + "."
                     : $"Saved {files.Count} pages: {Path.GetFileName(files[0])} to {Path.GetFileName(files[files.Count - 1])}.";

@@ -1,0 +1,85 @@
+/*
+ * Settings for the Unified Settings Options dialog, registered by [ProvideSettingsManifest] on the package.
+ * "@Name;{guid}" values are strings from the package resources (Localization\Strings.resx).
+ * Monikers, values and defaults must match Options\ExtensionSettings.cs; a test checks this.
+ */
+{
+  "properties": {
+    "shortcutCheatsheet.general.language": {
+      "type": "string",
+      "title": "@OptionsLanguageName;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "description": "@OptionsLanguageDescription;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "default": "automatic",
+      "enum": [ "automatic", "en", "zh-Hans", "zh-Hant", "cs", "nl", "fr", "de", "it", "ja", "ko", "pl", "pt-BR", "ru", "es", "tr" ],
+      "enumItemLabels": [
+        "@LanguageAutomatic;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+        "English", "中文(简体)", "中文(繁體)", "Čeština", "Nederlands", "Français", "Deutsch", "Italiano",
+        "日本語", "한국어", "Polski", "Português (Brasil)", "Русский", "Español", "Türkçe"
+      ],
+      "order": 0
+    },
+    "shortcutCheatsheet.general.grouping": {
+      "type": "string",
+      "title": "@OptionsGroupingName;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "description": "@OptionsGroupingDescription;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "default": "scope",
+      "enum": [ "scope", "category", "extension", "keys" ],
+      "enumItemLabels": [
+        "@GroupingScope;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+        "@GroupingCategory;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+        "@GroupingExtension;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+        "@GroupingKeys;{acf2e531-e047-4046-9f60-a0765ab33ef5}"
+      ],
+      "order": 1
+    },
+    "shortcutCheatsheet.export.paperSize": {
+      "type": "string",
+      "title": "@OptionsPaperName;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "description": "@OptionsPaperDescription;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "default": "automatic",
+      "enum": [ "automatic", "a4", "letter" ],
+      "enumItemLabels": [
+        "@PaperChoiceAutomatic;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+        "@PaperChoiceA4;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+        "@PaperChoiceLetter;{acf2e531-e047-4046-9f60-a0765ab33ef5}"
+      ],
+      "order": 0
+    },
+    "shortcutCheatsheet.export.theme": {
+      "type": "string",
+      "title": "@OptionsThemeName;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "description": "@OptionsThemeDescription;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "default": "light",
+      "enum": [ "light", "dark" ],
+      "enumItemLabels": [
+        "@ExportThemeLight;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+        "@ExportThemeDark;{acf2e531-e047-4046-9f60-a0765ab33ef5}"
+      ],
+      "order": 1
+    },
+    "shortcutCheatsheet.export.columns": {
+      "type": "integer",
+      "title": "@OptionsColumnsName;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "description": "@OptionsColumnsDescription;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "default": 3,
+      "minimum": 1,
+      "maximum": 4,
+      "order": 2
+    }
+  },
+  "categories": {
+    "shortcutCheatsheet": {
+      "title": "Shortcut Cheatsheet",
+      "description": "@OptionsRootDescription;{acf2e531-e047-4046-9f60-a0765ab33ef5}"
+    },
+    "shortcutCheatsheet.general": {
+      "title": "@OptionsCategoryGeneral;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "legacyOptionPageId": "5e2c8a47-3b1d-4f69-9a0e-7d4c2b8f1a63",
+      "order": 0
+    },
+    "shortcutCheatsheet.export": {
+      "title": "@OptionsCategoryExport;{acf2e531-e047-4046-9f60-a0765ab33ef5}",
+      "order": 1
+    }
+  }
+}

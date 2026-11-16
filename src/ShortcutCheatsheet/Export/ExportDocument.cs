@@ -77,7 +77,8 @@ namespace ShortcutCheatsheet.Export
             var parts = new List<string>();
             if (!string.IsNullOrEmpty(sheet.VisualStudio))
                 parts.Add("Visual Studio " + sheet.VisualStudio);
-            parts.Add(now.ToString("d MMMM yyyy", System.Globalization.CultureInfo.CurrentCulture));
+            // In the language of the extension, not of Windows: "16 November 2026" in an English sheet.
+            parts.Add(now.ToString("D", Localization.Localizer.Culture));
             if (!string.IsNullOrEmpty(filterText))
                 parts.Add(filterText);
 

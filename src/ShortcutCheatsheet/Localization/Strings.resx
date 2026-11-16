@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- 100 and 101: names of the legacy options page, used by [ProvideOptionPage]. -->
+  <data name="100" xml:space="preserve">
+    <value>Shortcut Cheatsheet</value>
+  </data>
+  <data name="101" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="OptionsRootDescription" xml:space="preserve">
+    <value>Settings for the Shortcut Cheatsheet window and its exports.</value>
+  </data>
+  <data name="OptionsCategoryGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="OptionsCategoryExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="OptionsLanguageName" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="OptionsLanguageDescription" xml:space="preserve">
+    <value>Language of the window and the exports. Automatic uses the language of Visual Studio, or English if the extension does not have that language.</value>
+  </data>
+  <data name="LanguageAutomatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="OptionsGroupingName" xml:space="preserve">
+    <value>Group by</value>
+  </data>
+  <data name="OptionsGroupingDescription" xml:space="preserve">
+    <value>How the window groups the shortcuts when it opens. You can still change it in the window.</value>
+  </data>
+  <data name="GroupingScope" xml:space="preserve">
+    <value>Where it works</value>
+  </data>
+  <data name="GroupingCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="GroupingExtension" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="GroupingKeys" xml:space="preserve">
+    <value>Keys (no groups)</value>
+  </data>
+  <data name="OptionsPaperName" xml:space="preserve">
+    <value>Paper size</value>
+  </data>
+  <data name="OptionsPaperDescription" xml:space="preserve">
+    <value>Page size of PDF and PNG exports. Automatic uses Letter in North America and A4 elsewhere, after the Windows region.</value>
+  </data>
+  <data name="PaperChoiceAutomatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="PaperChoiceA4" xml:space="preserve">
+    <value>A4</value>
+  </data>
+  <data name="PaperChoiceLetter" xml:space="preserve">
+    <value>Letter</value>
+  </data>
+  <data name="OptionsThemeName" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="OptionsThemeDescription" xml:space="preserve">
+    <value>Colors of PDF and PNG exports. Light is best for printing, dark for reading on a screen with a dark theme.</value>
+  </data>
+  <data name="ExportThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ExportThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="OptionsColumnsName" xml:space="preserve">
+    <value>Columns per page</value>
+  </data>
+  <data name="OptionsColumnsDescription" xml:space="preserve">
+    <value>Number of columns on a PDF or PNG page. Fewer columns leave more room for long command names.</value>
+  </data>
+</root>

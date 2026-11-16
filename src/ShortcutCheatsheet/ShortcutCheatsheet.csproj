@@ -64,6 +64,13 @@
     <Compile Include="Export\JsonExporter.cs" />
     <Compile Include="Export\SheetRenderer.cs" />
     <Compile Include="Export\TextExporters.cs" />
+    <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Options\ExtensionLanguage.cs" />
+    <Compile Include="Options\ExtensionSettings.cs" />
+    <Compile Include="Options\GeneralOptionsPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Options\SettingsService.cs" />
     <Compile Include="Model\CheatSheet.cs" />
     <Compile Include="Model\CheatSheetBuilder.cs" />
     <Compile Include="Model\CommandNames.cs" />
@@ -89,6 +96,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <!-- LogicalName "VSPackage" is where VS looks for package strings (registration.json, ProvideOptionPage).
+         The compiled command table (Menus.ctmenu) is merged into the same resource. -->
+    <EmbeddedResource Include="Localization\Strings.resx">
+      <LogicalName>VSPackage.resources</LogicalName>
+      <MergeWithCTO>true</MergeWithCTO>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <VSCTCompile Include="ShortcutCheatsheetPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
@@ -104,6 +119,9 @@
     <!-- Icon-32.png is in the DLL as a WPF resource: the image manifest refers to it with a pack URI. -->
     <Resource Include="Resources\Icon-32.png" />
     <Content Include="ShortcutCheatsheet.imagemanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Options\registration.json">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="Resources\Icon-90.png" />

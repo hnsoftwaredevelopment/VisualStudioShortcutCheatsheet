@@ -3,6 +3,7 @@ using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.VisualStudio.Shell;
+using ShortcutCheatsheet.Options;
 using ShortcutCheatsheet.ToolWindow;
 using Task = System.Threading.Tasks.Task;
 
@@ -14,6 +15,11 @@ namespace ShortcutCheatsheet
     /// </summary>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(PackageGuidString)]
+    // 100 and 101 are names in Localization\Strings.resx. IsInUnifiedSettings keeps the legacy page out of the new
+    // Options dialog, where Options\registration.json takes its place.
+    [ProvideOptionPage(typeof(GeneralOptionsPage), "Shortcut Cheatsheet", "General", 100, 101, true,
+        IsInUnifiedSettings = true, UnifiedSettingsCategoryMoniker = "shortcutCheatsheet.general")]
+    [ProvideSettingsManifest(PackageRelativeManifestFile = @"Options\registration.json")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     // Opens as a tab next to Solution Explorer.
     [ProvideToolWindow(typeof(CheatsheetWindow), Style = VsDockStyle.Tabbed, Window = "3AE79031-E1BC-11D0-8F78-00A0C9110057")]
@@ -26,6 +32,8 @@ namespace ShortcutCheatsheet
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
+            // Before the window: it needs the language and the grouping.
+            await SettingsService.InitializeAsync(this, cancellationToken);
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             if (await GetServiceAsync(typeof(IMenuCommandService)) is OleMenuCommandService commands)
