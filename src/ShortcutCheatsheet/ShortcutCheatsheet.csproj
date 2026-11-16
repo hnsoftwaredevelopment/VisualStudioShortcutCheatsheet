@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>18.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">18.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <AssemblyVersion>2026.11.16.2</AssemblyVersion>
+    <AssemblyVersion>2026.11.16.5</AssemblyVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -65,8 +65,21 @@
     <Compile Include="Origin\ManifestInfo.cs" />
     <Compile Include="Origin\PackageTables.cs" />
     <Compile Include="Origin\PkgdefPackages.cs" />
+    <Compile Include="ImageMonikers.cs" />
+    <Compile Include="Model\KeyChord.cs" />
+    <Compile Include="Model\ShortcutView.cs" />
+    <Compile Include="ToolWindow\CheatsheetViewModel.cs" />
+    <Compile Include="ToolWindow\CheatsheetControl.xaml.cs">
+      <DependentUpon>CheatsheetControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShortcutCheatsheetPackage.cs" />
     <Compile Include="ToolWindow\CheatsheetWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ToolWindow\CheatsheetControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="ShortcutCheatsheetPackage.vsct">
@@ -81,7 +94,11 @@
     <Content Include="Resources\Icon-256.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="Resources\Icon-32.png" />
+    <!-- Icon-32.png is in the DLL as a WPF resource: the image manifest refers to it with a pack URI. -->
+    <Resource Include="Resources\Icon-32.png" />
+    <Content Include="ShortcutCheatsheet.imagemanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="Resources\Icon-90.png" />
     <None Include="Resources\ShortcutCheatsheet.svg" />
   </ItemGroup>

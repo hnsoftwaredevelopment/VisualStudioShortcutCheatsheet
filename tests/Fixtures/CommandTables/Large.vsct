@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Test fixture: a table larger than 64 KB, so the compressed .cto has several blocks.
+     KnownImageIds.vsct brings thousands of symbols along, as it does in a real extension. -->
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <Include href="KnownImageIds.vsct" />
+
+  <Commands package="guidLargePackage">
+    <Buttons>
+      <Button guid="guidLargeCmdSet" id="cmdidLarge" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="ImageCatalogGuid" id="Keyboard" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Large Command</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <KeyBindings>
+    <KeyBinding guid="guidLargeCmdSet" id="cmdidLarge" editor="guidVSStd97" key1="VK_F12" mod1="Control Alt" />
+  </KeyBindings>
+
+  <Symbols>
+    <GuidSymbol name="guidLargePackage" value="{22222222-3333-4444-5555-666666666666}" />
+    <GuidSymbol name="guidLargeCmdSet" value="{bbbbbbbb-cccc-dddd-eeee-ffffffffffff}">
+      <IDSymbol name="cmdidLarge" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
