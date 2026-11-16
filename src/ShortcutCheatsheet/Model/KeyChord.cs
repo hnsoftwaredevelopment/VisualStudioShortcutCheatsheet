@@ -50,13 +50,14 @@ namespace ShortcutCheatsheet.Model
             return parts;
         }
 
-        /// <summary>The arrow keys as on the keyboard; the text of VS ("Up Arrow") stays in the data and the search.</summary>
+        /// <summary>The arrow keys and Enter as on the keyboard; the text of VS ("Up Arrow") stays in the data and the search.</summary>
         private static readonly Dictionary<string, string> Symbols = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
             ["Up Arrow"] = "\u2191",
             ["Down Arrow"] = "\u2193",
             ["Left Arrow"] = "\u2190",
             ["Right Arrow"] = "\u2192",
+            ["Enter"] = "\u23CE", // the return symbol is on nearly every keyboard; Backspace and the rest are not
         };
 
         /// <summary>What a key cap shows: an arrow for the arrow keys, otherwise the key as VS names it.</summary>

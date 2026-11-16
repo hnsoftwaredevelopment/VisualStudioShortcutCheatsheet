@@ -9,13 +9,27 @@ using ShortcutCheatsheet.Model;
 
 namespace ShortcutCheatsheet.ToolWindow
 {
+    /// <summary>One stroke of a chord, and whether another follows: the comma goes after it, so a wrapped chord
+    /// ends a line with "Ctrl R ," instead of starting the next one with a comma.</summary>
+    internal sealed class StrokeView
+    {
+        public StrokeView(IReadOnlyList<string> keys, bool hasNext)
+        {
+            Keys = keys;
+            HasNext = hasNext;
+        }
+
+        public IReadOnlyList<string> Keys { get; }
+        public bool HasNext { get; }
+    }
     /// <summary>One row in the list: a shortcut plus what the row needs to draw it.</summary>
     internal sealed class ShortcutItem
     {
         public ShortcutItem(Shortcut shortcut, Grouping grouping)
         {
             Shortcut = shortcut;
-            Strokes = KeyChord.Parse(shortcut.Keys).Select(stroke => (IReadOnlyList<string>)stroke.Select(KeyChord.Display).ToList()).ToList();
+            var strokes = KeyChord.Parse(shortcut.Keys);
+            Strokes = strokes.Select((stroke, i) => new StrokeView(stroke.Select(KeyChord.Display).ToList(), i < strokes.Count - 1)).ToList();
             (Outer, Inner) = ShortcutView.Groups(shortcut, grouping);
             ShowScope = grouping == Grouping.Keys;
             // The label says nothing new when the group heading or the category already is the extension.
@@ -23,7 +37,7 @@ namespace ShortcutCheatsheet.ToolWindow
         }
 
         public Shortcut Shortcut { get; }
-        public IReadOnlyList<IReadOnlyList<string>> Strokes { get; }
+        public IReadOnlyList<StrokeView> Strokes { get; }
         public string Outer { get; }
         public string Inner { get; }
         public string Name => Shortcut.Name;

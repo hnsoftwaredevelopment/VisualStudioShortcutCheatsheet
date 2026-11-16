@@ -21,23 +21,19 @@
             </Grid>
         </DataTemplate>
 
-        <!-- One stroke of a chord: Ctrl K. A comma before every stroke but the first. -->
+        <!-- One stroke of a chord: Ctrl K, with a comma after it when another stroke follows. -->
         <DataTemplate x:Key="Stroke">
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="Separator" Text="," Margin="0,0,4,0" VerticalAlignment="Bottom" Opacity="0.7" />
-                <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource KeyCap}" Focusable="False">
+                <ItemsControl ItemsSource="{Binding Keys}" ItemTemplate="{StaticResource KeyCap}" Focusable="False">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
+                <TextBlock Text="," Margin="0,0,5,0" VerticalAlignment="Bottom" Opacity="0.7"
+                           Visibility="{Binding HasNext, Converter={StaticResource Visible}}" />
             </StackPanel>
-            <DataTemplate.Triggers>
-                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter TargetName="Separator" Property="Visibility" Value="Collapsed" />
-                </Trigger>
-            </DataTemplate.Triggers>
         </DataTemplate>
 
         <!-- A small label: the extension, or "yours". -->
@@ -50,35 +46,39 @@
             <Setter Property="BorderBrush" Value="{DynamicResource {x:Static platformUI:EnvironmentColors.ToolWindowBorderBrushKey}}" />
         </Style>
 
+        <!-- Two columns of fixed proportion for every row, so names line up. The labels (conflict, yours, extension)
+             sit at the right end of the name column: in a third column of their own they would make the split
+             different for rows with and without a label. -->
         <DataTemplate x:Key="Row">
             <Grid Margin="0,1" ToolTip="{Binding ToolTip}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" MinWidth="110" />
                     <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ItemsControl ItemsSource="{Binding Strokes}" ItemTemplate="{StaticResource Stroke}" AlternationCount="100" Focusable="False">
+                <ItemsControl ItemsSource="{Binding Strokes}" ItemTemplate="{StaticResource Stroke}" Focusable="False">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,0,0">
-                    <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                    <TextBlock Text="{Binding Scope}" Margin="8,0,0,0" Opacity="0.6"
-                               Visibility="{Binding ShowScope, Converter={StaticResource Visible}}" />
-                </StackPanel>
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                    <imaging:CrispImage Width="16" Height="16" Margin="6,0,0,0" Moniker="{x:Static catalog:KnownMonikers.StatusWarning}"
-                                        Visibility="{Binding HasConflict, Converter={StaticResource Visible}}" />
-                    <Border Style="{StaticResource Badge}" Visibility="{Binding IsCustom, Converter={StaticResource Visible}}">
-                        <TextBlock Text="yours" FontSize="11" />
-                    </Border>
-                    <Border Style="{StaticResource Badge}" Visibility="{Binding ShowExtension, Converter={StaticResource Visible}}">
-                        <TextBlock Text="{Binding Extension}" FontSize="11" Opacity="0.85" MaxWidth="120" TextTrimming="CharacterEllipsis" />
-                    </Border>
-                </StackPanel>
+                <DockPanel Grid.Column="1" Margin="8,0,0,0" LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                        <imaging:CrispImage Width="16" Height="16" Margin="6,0,0,0" Moniker="{x:Static catalog:KnownMonikers.StatusWarning}"
+                                            Visibility="{Binding HasConflict, Converter={StaticResource Visible}}" />
+                        <Border Style="{StaticResource Badge}" Visibility="{Binding IsCustom, Converter={StaticResource Visible}}">
+                            <TextBlock Text="yours" FontSize="11" />
+                        </Border>
+                        <Border Style="{StaticResource Badge}" Visibility="{Binding ShowExtension, Converter={StaticResource Visible}}">
+                            <TextBlock Text="{Binding Extension}" FontSize="11" Opacity="0.85" MaxWidth="120" TextTrimming="CharacterEllipsis" />
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="{Binding Scope}" Margin="8,0,0,0" Opacity="0.6"
+                                   Visibility="{Binding ShowScope, Converter={StaticResource Visible}}" />
+                    </StackPanel>
+                </DockPanel>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

@@ -36,12 +36,14 @@ namespace ShortcutCheatsheet.Tests
         }
 
         [TestMethod]
-        public void Shows_arrows_as_symbols()
+        public void Shows_arrows_and_Enter_as_symbols()
         {
             Assert.AreEqual("\u2191", KeyChord.Display("Up Arrow"));
             Assert.AreEqual("\u2193", KeyChord.Display("Down Arrow"));
             Assert.AreEqual("\u2190", KeyChord.Display("Left Arrow"));
             Assert.AreEqual("\u2192", KeyChord.Display("Right Arrow"));
+            Assert.AreEqual("\u23CE", KeyChord.Display("Enter"));
+            Assert.AreEqual("Bkspce", KeyChord.Display("Bkspce"));
             Assert.AreEqual("PgUp", KeyChord.Display("PgUp"));
             Assert.AreEqual("Ctrl", KeyChord.Display("Ctrl"));
         }
