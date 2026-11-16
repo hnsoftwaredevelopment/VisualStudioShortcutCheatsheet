@@ -49,8 +49,12 @@ jobs:
       - name: Check out
         uses: actions/checkout@v7
         with:
-          # The shared code (external/ExtensionCommon) is a git submodule.
+          # The shared code (external/ExtensionCommon) is a git submodule. While ExtensionCommon is a private
+          # repository, the default token cannot read it: then the secret EXTENSIONCOMMON_TOKEN must hold a
+          # fine-grained token with Contents: Read-only on this repository and on ExtensionCommon. Without the
+          # secret the default token is used, which is enough once ExtensionCommon is public.
           submodules: true
+          token: ${{ secrets.EXTENSIONCOMMON_TOKEN || github.token }}
 
       - name: Determine the version
         id: version
