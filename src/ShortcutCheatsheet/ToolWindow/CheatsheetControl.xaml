@@ -116,9 +116,9 @@
                     Style="{DynamicResource {x:Static vsshell:VsResourceKeys.ButtonStyleKey}}" />
             <CheckBox Content="Only extensions" IsChecked="{Binding OnlyExtensions}" Margin="0,2,14,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
-            <CheckBox Content="Only added by you" IsChecked="{Binding OnlyCustom}" Margin="0,2,14,4" VerticalAlignment="Center"
+            <CheckBox Content="Only added by you" IsChecked="{Binding OnlyCustom}" Visibility="{Binding HasCustom, Converter={StaticResource Visible}}" Margin="0,2,14,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
-            <CheckBox Content="Only conflicts" IsChecked="{Binding OnlyConflicts}" Margin="0,2,0,4" VerticalAlignment="Center"
+            <CheckBox Content="Only conflicts" IsChecked="{Binding OnlyConflicts}" Visibility="{Binding HasConflicts, Converter={StaticResource Visible}}" Margin="0,2,0,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
         </WrapPanel>
 

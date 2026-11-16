@@ -15,7 +15,7 @@ namespace ShortcutCheatsheet.ToolWindow
         public ShortcutItem(Shortcut shortcut, Grouping grouping)
         {
             Shortcut = shortcut;
-            Strokes = KeyChord.Parse(shortcut.Keys);
+            Strokes = KeyChord.Parse(shortcut.Keys).Select(stroke => (IReadOnlyList<string>)stroke.Select(KeyChord.Display).ToList()).ToList();
             (Outer, Inner) = ShortcutView.Groups(shortcut, grouping);
             ShowScope = grouping == Grouping.Keys;
             // The label says nothing new when the group heading or the category already is the extension.
@@ -97,7 +97,18 @@ namespace ShortcutCheatsheet.ToolWindow
         public CheatSheet Sheet
         {
             get => _sheet;
-            set { _sheet = value; Rebuild(); }
+            set
+            {
+                _sheet = value;
+                // A hidden filter must not stay on, or the list would be empty for no visible reason.
+                if (!HasCustom) _onlyCustom = false;
+                if (!HasConflicts) _onlyConflicts = false;
+                OnPropertyChanged(nameof(HasCustom));
+                OnPropertyChanged(nameof(HasConflicts));
+                OnPropertyChanged(nameof(OnlyCustom));
+                OnPropertyChanged(nameof(OnlyConflicts));
+                Rebuild();
+            }
         }
 
         public string SearchText
@@ -164,6 +175,11 @@ namespace ShortcutCheatsheet.ToolWindow
 
         public bool IsGrouped => _grouping != Grouping.Keys;
 
+        /// <summary>A filter only shows when it can find something: no own shortcuts means no "Only added by you".</summary>
+        public bool HasCustom => _sheet?.Shortcuts.Any(s => s.IsCustom) == true;
+
+        public bool HasConflicts => _sheet?.Shortcuts.Any(s => s.ConflictsWith != null) == true;
+
         /// <summary>The visible rows, in order: what an export of "what you see" would contain.</summary>
         public IEnumerable<Shortcut> Visible => _items?.Cast<ShortcutItem>().Select(i => i.Shortcut) ?? Enumerable.Empty<Shortcut>();
 
@@ -199,7 +215,12 @@ namespace ShortcutCheatsheet.ToolWindow
             int extensions = sheet.Shortcuts.Where(s => s.Extension != null).Select(s => s.Extension).Distinct().Count();
             int conflicts = sheet.Shortcuts.Count(s => s.ConflictsWith != null);
             int custom = sheet.Shortcuts.Count(s => s.IsCustom);
-            string text = $"{sheet.Shortcuts.Count} shortcuts, {fromExtensions} from {extensions} extensions, {custom} added by you, {conflicts} with a conflict.";
+            // Leave out what is zero: "0 added by you" is noise.
+            var parts = new List<string> { sheet.Shortcuts.Count == 1 ? "1 shortcut" : $"{sheet.Shortcuts.Count} shortcuts" };
+            if (fromExtensions > 0) parts.Add($"{fromExtensions} from {extensions} extensions");
+            if (custom > 0) parts.Add($"{custom} added by you");
+            if (conflicts > 0) parts.Add($"{conflicts} with a conflict");
+            string text = string.Join(", ", parts) + ".";
             return shown == sheet.Shortcuts.Count ? text : text + $" Showing {shown}.";
         }
 

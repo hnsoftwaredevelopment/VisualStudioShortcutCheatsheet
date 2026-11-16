@@ -36,6 +36,32 @@ namespace ShortcutCheatsheet.Tests
         }
 
         [TestMethod]
+        public void Shows_arrows_as_symbols()
+        {
+            Assert.AreEqual("\u2191", KeyChord.Display("Up Arrow"));
+            Assert.AreEqual("\u2193", KeyChord.Display("Down Arrow"));
+            Assert.AreEqual("\u2190", KeyChord.Display("Left Arrow"));
+            Assert.AreEqual("\u2192", KeyChord.Display("Right Arrow"));
+            Assert.AreEqual("PgUp", KeyChord.Display("PgUp"));
+            Assert.AreEqual("Ctrl", KeyChord.Display("Ctrl"));
+        }
+
+        [TestMethod]
+        public void Hides_filters_that_would_find_nothing()
+        {
+            var model = new ToolWindow.CheatsheetViewModel { OnlyCustom = true };
+            model.Sheet = new CheatSheet { Shortcuts = { S("Global", "F5", "Start", "Debug") } };
+            Assert.IsFalse(model.HasCustom);
+            Assert.IsFalse(model.HasConflicts);
+            Assert.IsFalse(model.OnlyCustom, "a hidden filter is switched off");
+            Assert.AreEqual("1 shortcut.", model.Summary);
+
+            model.Sheet = new CheatSheet { Shortcuts = { S("Text Editor", "Ctrl+Shift+D", "Duplicate", "Edit", custom: true, conflict: true) } };
+            Assert.IsTrue(model.HasCustom);
+            Assert.IsTrue(model.HasConflicts);
+        }
+
+        [TestMethod]
         public void Searches_names_and_keys()
         {
             var duplicate = S("Text Editor", "Ctrl+E, V", "Duplicate", "Edit", "Edit.Duplicate");
