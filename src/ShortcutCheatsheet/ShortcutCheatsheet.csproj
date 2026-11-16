@@ -57,7 +57,13 @@
     <Compile Include="Collecting\Diagnostics.cs" />
     <Compile Include="Collecting\DteBindingReader.cs" />
     <Compile Include="Collecting\RawBinding.cs" />
+    <Compile Include="Export\ExportDocument.cs" />
+    <Compile Include="Export\Exporter.cs" />
+    <Compile Include="Export\HtmlExporter.cs" />
+    <Compile Include="Export\ImageExporters.cs" />
     <Compile Include="Export\JsonExporter.cs" />
+    <Compile Include="Export\SheetRenderer.cs" />
+    <Compile Include="Export\TextExporters.cs" />
     <Compile Include="Model\CheatSheet.cs" />
     <Compile Include="Model\CheatSheetBuilder.cs" />
     <Compile Include="Model\CommandNames.cs" />

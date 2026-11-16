@@ -210,7 +210,7 @@ namespace ShortcutCheatsheet.ToolWindow
                 return;
             }
 
-            var filter = new ShortcutFilter { Text = _searchText, OnlyExtensions = _onlyExtensions, OnlyCustom = _onlyCustom, OnlyNotApplied = _onlyNotApplied };
+            var filter = Filter;
             var shown = ShortcutView.Sort(_sheet.Shortcuts.Where(s => ShortcutView.Matches(s, filter)), _grouping)
                 .Select(s => new ShortcutItem(s, _grouping))
                 .ToList();
@@ -225,6 +225,23 @@ namespace ShortcutCheatsheet.ToolWindow
             Items = view;
             OnPropertyChanged(nameof(IsGrouped));
             Summary = Describe(shown.Count);
+        }
+
+        public ShortcutFilter Filter => new ShortcutFilter { Text = _searchText, OnlyExtensions = _onlyExtensions, OnlyCustom = _onlyCustom, OnlyNotApplied = _onlyNotApplied };
+
+        /// <summary>The window as an export: what it shows, in its grouping. Null before the sheet is loaded.</summary>
+        public Export.ExportDocument CreateExport() =>
+            _sheet == null ? null : Export.ExportDocument.Create(_sheet, Filter, _grouping, DescribeFilter(), DateTimeOffset.Now);
+
+        /// <summary>The filter in a few words for the export's subtitle: "search 'debug' · only extensions".</summary>
+        private string DescribeFilter()
+        {
+            var parts = new List<string>();
+            if (!string.IsNullOrWhiteSpace(_searchText)) parts.Add($"search '{_searchText.Trim()}'");
+            if (_onlyExtensions) parts.Add("only extensions");
+            if (_onlyCustom) parts.Add("only added by you");
+            if (_onlyNotApplied) parts.Add("only not applied");
+            return parts.Count == 0 ? null : string.Join(" · ", parts);
         }
 
         private string Describe(int shown)

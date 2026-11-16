@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.VisualStudio.Shell;
@@ -77,24 +78,38 @@ namespace ShortcutCheatsheet.ToolWindow
             }
         }
 
+        /// <summary>The format chosen last time in this session (1-based, as the dialog counts).</summary>
+        private int _formatIndex = 1;
+
         private void Export()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            if (_model.Sheet == null)
+            var document = _model.CreateExport();
+            if (document == null)
                 return;
             var dialog = new Microsoft.Win32.SaveFileDialog
             {
                 Title = "Export shortcuts",
-                FileName = "Shortcuts.json",
-                Filter = "JSON (*.json)|*.json",
-                DefaultExt = ".json",
+                FileName = "Shortcuts",
+                Filter = Exporter.DialogFilter,
+                FilterIndex = _formatIndex,
+                AddExtension = true,
             };
             if (dialog.ShowDialog() != true)
                 return;
+            _formatIndex = dialog.FilterIndex;
+
+            // The extension decides; the chosen filter only when the name has none of ours.
+            var format = Exporter.FromPath(dialog.FileName) ?? Exporter.Formats[Math.Max(0, dialog.FilterIndex - 1)].Format;
+            string path = Exporter.FromPath(dialog.FileName) == null
+                ? dialog.FileName + Exporter.Formats.First(f => f.Format == format).Extension
+                : dialog.FileName;
             try
             {
-                using (var file = File.Create(dialog.FileName))
-                    JsonExporter.Write(_model.Sheet, file);
+                var files = Exporter.Write(document, format, path, new RenderOptions());
+                _model.Summary = files.Count == 1
+                    ? "Saved " + Path.GetFileName(files[0]) + "."
+                    : $"Saved {files.Count} pages: {Path.GetFileName(files[0])} to {Path.GetFileName(files[files.Count - 1])}.";
             }
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
