@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Names of the legacy options page, used by [ProvideOptionPage]. -->
+  <data name="100" xml:space="preserve">
+    <value>Shortcut Cheatsheet</value>
+  </data>
+  <data name="101" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <!-- The options (registration.json and the legacy page). -->
+  <data name="OptionsRootDescription" xml:space="preserve">
+    <value>Settings for the Shortcut Cheatsheet window and its exports.</value>
+  </data>
+  <data name="OptionsCategoryGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="OptionsCategoryExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="OptionsLanguageName" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="OptionsLanguageDescription" xml:space="preserve">
+    <value>Language of the window and the exports. Automatic uses the language of Visual Studio, or English if the extension does not have that language.</value>
+  </data>
+  <data name="LanguageAutomatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="OptionsGroupingName" xml:space="preserve">
+    <value>Group by</value>
+  </data>
+  <data name="OptionsGroupingDescription" xml:space="preserve">
+    <value>How the window groups the shortcuts when it opens. You can still change it in the window.</value>
+  </data>
+  <data name="GroupingScope" xml:space="preserve">
+    <value>Where it works</value>
+  </data>
+  <data name="GroupingCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="GroupingExtension" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="GroupingKeys" xml:space="preserve">
+    <value>Keys (no groups)</value>
+  </data>
+  <data name="OptionsPaperName" xml:space="preserve">
+    <value>Paper size</value>
+  </data>
+  <data name="OptionsPaperDescription" xml:space="preserve">
+    <value>Page size of PDF and PNG exports. Automatic uses Letter in North America and A4 elsewhere, after the Windows region.</value>
+  </data>
+  <data name="PaperChoiceAutomatic" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="PaperChoiceA4" xml:space="preserve">
+    <value>A4</value>
+  </data>
+  <data name="PaperChoiceLetter" xml:space="preserve">
+    <value>Letter</value>
+  </data>
+  <data name="OptionsThemeName" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="OptionsThemeDescription" xml:space="preserve">
+    <value>Colors of PDF and PNG exports. Light is best for printing, dark for reading on a screen with a dark theme.</value>
+  </data>
+  <data name="ExportThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ExportThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="OptionsColumnsName" xml:space="preserve">
+    <value>Columns per page</value>
+  </data>
+  <data name="OptionsColumnsDescription" xml:space="preserve">
+    <value>Number of columns on a PDF or PNG page. Fewer columns leave more room for long command names.</value>
+  </data>
+  <!-- The window. -->
+  <data name="WindowSearchLabel" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="WindowSearchHint" xml:space="preserve">
+    <value>Search by name or keys, such as  ctrl+e,v</value>
+  </data>
+  <data name="WindowGroupBy" xml:space="preserve">
+    <value>Group by</value>
+  </data>
+  <data name="WindowRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="WindowExport" xml:space="preserve">
+    <value>Export...</value>
+  </data>
+  <data name="WindowOnlyExtensions" xml:space="preserve">
+    <value>Only extensions</value>
+  </data>
+  <data name="WindowOnlyCustom" xml:space="preserve">
+    <value>Only added by you</value>
+  </data>
+  <data name="WindowOnlyNotApplied" xml:space="preserve">
+    <value>Only not applied</value>
+  </data>
+  <data name="WindowCollecting" xml:space="preserve">
+    <value>Collecting shortcuts...</value>
+  </data>
+  <data name="WindowList" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="Yours" xml:space="preserve">
+    <value>yours</value>
+  </data>
+  <data name="SummaryFormat" xml:space="preserve">
+    <value>{0}.</value>
+  </data>
+  <data name="SummaryListSeparator" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="SummaryShortcutsOne" xml:space="preserve">
+    <value>1 shortcut</value>
+  </data>
+  <data name="SummaryShortcutsFormat" xml:space="preserve">
+    <value>{0} shortcuts</value>
+  </data>
+  <data name="SummaryFromExtensionsFormat" xml:space="preserve">
+    <value>{0} from {1} extensions</value>
+  </data>
+  <data name="SummaryAddedByYouFormat" xml:space="preserve">
+    <value>{0} added by you</value>
+  </data>
+  <data name="SummaryNotAppliedFormat" xml:space="preserve">
+    <value>{0} not applied</value>
+  </data>
+  <data name="SummaryShowingFormat" xml:space="preserve">
+    <value>Showing {0}.</value>
+  </data>
+  <data name="UsedByFormat" xml:space="preserve">
+    <value>{0} wants these keys, but they are used by {1}.</value>
+  </data>
+  <data name="ToolTipFromFormat" xml:space="preserve">
+    <value>From {0}</value>
+  </data>
+  <data name="ToolTipAddedByYou" xml:space="preserve">
+    <value>Added by you</value>
+  </data>
+  <data name="ToolTipNotAppliedFormat" xml:space="preserve">
+    <value>Not applied: the keys are used by {0}.
+To use this command, give it other keys in Tools &gt; Options &gt; Environment &gt; Keyboard.</value>
+  </data>
+  <data name="FilterSearchFormat" xml:space="preserve">
+    <value>search '{0}'</value>
+  </data>
+  <data name="FilterOnlyExtensions" xml:space="preserve">
+    <value>only extensions</value>
+  </data>
+  <data name="FilterOnlyCustom" xml:space="preserve">
+    <value>only added by you</value>
+  </data>
+  <data name="FilterOnlyNotApplied" xml:space="preserve">
+    <value>only not applied</value>
+  </data>
+  <data name="CollectFailed" xml:space="preserve">
+    <value>The shortcuts could not be collected. Click Refresh to try again.</value>
+  </data>
+  <data name="ExportDialogTitle" xml:space="preserve">
+    <value>Export shortcuts</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="ExportSavedFormat" xml:space="preserve">
+    <value>Saved {0}.</value>
+  </data>
+  <data name="ExportSavedPagesFormat" xml:space="preserve">
+    <value>Saved {0} pages: {1} to {2}.</value>
+  </data>
+  <data name="ExportFailedFormat" xml:space="preserve">
+    <value>Saving failed: {0}</value>
+  </data>
+  <data name="FormatPng" xml:space="preserve">
+    <value>PNG image</value>
+  </data>
+  <data name="FormatHtml" xml:space="preserve">
+    <value>Web page</value>
+  </data>
+  <data name="FormatCsv" xml:space="preserve">
+    <value>CSV for Excel</value>
+  </data>
+  <!-- PDF, PNG, HTML and Markdown exports. JSON, XML and CSV stay English. -->
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Visual Studio shortcuts</value>
+  </data>
+  <data name="ExportContinuedFormat" xml:space="preserve">
+    <value>{0} (continued)</value>
+  </data>
+  <data name="ExportFooter" xml:space="preserve">
+    <value>Shortcut Cheatsheet for Visual Studio</value>
+  </data>
+  <data name="ExportSearchHint" xml:space="preserve">
+    <value>Search (name, command or keys)</value>
+  </data>
+  <data name="ExportNoMatch" xml:space="preserve">
+    <value>No shortcuts match.</value>
+  </data>
+  <data name="ExportColumnKeys" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="ExportColumnCommand" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="ExportColumnNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NoteNotApplied" xml:space="preserve">
+    <value>not applied</value>
+  </data>
+  <data name="NoteNotAppliedFormat" xml:space="preserve">
+    <value>not applied, the keys are used by {0}</value>
+  </data>
+</root>

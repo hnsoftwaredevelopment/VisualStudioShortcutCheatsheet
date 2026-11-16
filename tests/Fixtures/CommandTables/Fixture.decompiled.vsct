@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable language="nl-NL" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable">
+  <Commands>
+    <Groups>
+      <Group guid="guidFixtureCmdSet" id="grpFixture" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+  </Commands>
+  <Commands package="guidFixturePackage">
+    <Buttons>
+      <Button guid="guidFixtureCmdSet" id="cmdidFirst" priority="0x0100" type="Button">
+        <Parent guid="guidFixtureCmdSet" id="grpFixture" />
+        <Strings>
+          <ButtonText>First Command</ButtonText>
+          <CanonicalName>.Tools.FixtureFirst</CanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidFixtureOtherSet" id="cmdidOther" priority="0x0100" type="Button">
+        <Parent guid="guidFixtureCmdSet" id="grpFixture" />
+        <Strings>
+          <ButtonText>Other Set Command</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidFixtureCmdSet" id="cmdidSecond" priority="0x0101" type="Button">
+        <Parent guid="guidFixtureCmdSet" id="grpFixture" />
+        <Strings>
+          <ButtonText>Second Command</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidFixtureCmdSet" id="cmdidNoKeys" priority="0x0102" type="Button">
+        <Parent guid="guidFixtureCmdSet" id="grpFixture" />
+        <Strings>
+          <ButtonText>Without Keys</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+  <CommandPlacements>
+    <CommandPlacement guid="guidVSStd97" id="cmdidCut" priority="0x0200">
+      <Parent guid="guidFixtureCmdSet" id="grpFixture" />
+    </CommandPlacement>
+  </CommandPlacements>
+  <KeyBindings>
+    <KeyBinding guid="guidFixtureCmdSet" id="cmdidFirst" editor="guidVSStd97" key1="VK_F1" mod1="Control Shift" />
+    <KeyBinding guid="guidFixtureOtherSet" id="cmdidOther" editor="guidVSStd97" key1="'D'" mod1="Alt" />
+    <KeyBinding guid="guidVSStd97" id="cmdidCut" editor="guidVSStd97" key1="'X'" mod1="Control Alt" />
+    <KeyBinding guid="guidFixtureCmdSet" id="cmdidSecond" editor="guidTextEditor" key1="'K'" mod1="Control" key2="'Q'" mod2="Control" />
+  </KeyBindings>
+  <Symbols>
+    <GuidSymbol name="guidFixturePackage" value="{11111111-2222-3333-4444-555555555555}" />
+    <GuidSymbol name="Group_Undefined" value="{83285929-227c-11d3-b870-00c04f79f802}" />
+    <GuidSymbol name="Pkg_Undefined" value="{8328592a-227c-11d3-b870-00c04f79f802}" />
+    <GuidSymbol name="guidTextEditor" value="{8b382828-6202-11d1-8870-0000f87579d2}" />
+    <GuidSymbol name="guidFixtureOtherSet" value="{12345678-9abc-def0-1234-56789abcdef0}">
+      <IDSymbol name="cmdidOther" value="0x0200" />
+    </GuidSymbol>
+    <GuidSymbol name="guidVSStd97" value="{5efc7975-14bc-11cf-9b2b-00aa00573819}">
+      <IDSymbol name="cmdidCut" value="0x0010" />
+    </GuidSymbol>
+    <GuidSymbol name="guidFixtureCmdSet" value="{aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee}">
+      <IDSymbol name="cmdidFirst" value="0x0100" />
+      <IDSymbol name="cmdidNoKeys" value="0x0102" />
+      <IDSymbol name="cmdidSecond" value="0x0101" />
+      <IDSymbol name="grpFixture" value="0x1020" />
+    </GuidSymbol>
+    <GuidSymbol name="guidSHLMainMenu" value="{d309f791-903f-11d0-9efc-00a0c911004f}">
+      <IDSymbol name="IDM_VS_MENU_TOOLS" value="0x0085" />
+    </GuidSymbol>
+    <GuidSymbol name="guidOfficeIcon" value="{d309f794-903f-11d0-9efc-00a0c911004f}">
+      <IDSymbol name="msotcidNoIcon" value="0x02EA" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

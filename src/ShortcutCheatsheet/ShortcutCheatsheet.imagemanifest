@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Our own icon for the menu item and the tool window. VS finds this file in the extension folder by itself.
+     The PNG is a WPF resource in the DLL (pack URI); VS scales it to the size it needs. -->
+<ImageManifest xmlns="http://schemas.microsoft.com/VisualStudio/ImageManifestSchema/2014">
+  <Symbols>
+    <String Name="Resources" Value="/ShortcutCheatsheet;component/Resources" />
+    <Guid Name="ShortcutCheatsheetImages" Value="{0603114e-3612-40be-b924-b8b033ebb6d2}" />
+    <ID Name="Cheatsheet" Value="1" />
+  </Symbols>
+  <Images>
+    <Image Guid="$(ShortcutCheatsheetImages)" ID="$(Cheatsheet)">
+      <Source Uri="$(Resources)/Icon-32.png">
+        <Size Value="32" />
+      </Source>
+      <Source Uri="$(Resources)/Icon-32.png">
+        <SizeRange MinSize="16" MaxSize="31" />
+      </Source>
+    </Image>
+  </Images>
+  <ImageLists />
+</ImageManifest>

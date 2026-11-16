@@ -1,0 +1,158 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Threading;
+using ShortcutCheatsheet.Collecting;
+using ShortcutCheatsheet.Export;
+using ShortcutCheatsheet.Localization;
+using ShortcutCheatsheet.Options;
+using Task = System.Threading.Tasks.Task;
+
+namespace ShortcutCheatsheet.ToolWindow
+{
+    /// <summary>
+    /// View > Other Windows > Shortcut Cheatsheet. The pane collects (VS access) and exports; CheatsheetControl
+    /// draws, CheatsheetViewModel filters and groups.
+    /// </summary>
+    [Guid("68b99b08-124c-4da3-ace2-dcd8c36dbd5a")]
+    public sealed class CheatsheetWindow : ToolWindowPane
+    {
+        private readonly CheatsheetViewModel _model = new CheatsheetViewModel();
+        private readonly CheatsheetControl _control;
+        private AsyncPackage _package;
+        private CancellationTokenSource _loading;
+
+        public CheatsheetWindow() : base(null)
+        {
+            Caption = "Shortcut Cheatsheet";
+            BitmapImageMoniker = ImageMonikers.Cheatsheet;
+            _control = new CheatsheetControl(_model);
+            _control.RefreshRequested += (s, e) => StartLoading();
+            _control.ExportRequested += (s, e) => { ThreadHelper.ThrowIfNotOnUIThread(); Export(); };
+            Content = _control;
+
+            _grouping = SettingsService.Current.Grouping;
+            _model.Grouping = _grouping;
+            SettingsService.Changed += OnSettingsChanged;
+        }
+
+        /// <summary>The grouping from the options, to see whether that setting changed.</summary>
+        private Model.Grouping _grouping;
+
+        /// <summary>The language the texts are in now.</summary>
+        private System.Globalization.CultureInfo _culture = Localizer.Culture;
+
+        /// <summary>
+        /// A new language changes all texts at once. A new default grouping also applies to the open window; a grouping
+        /// chosen in the window stays while the setting is the same.
+        /// </summary>
+        private void OnSettingsChanged(object sender, EventArgs e)
+        {
+            if (!Equals(_culture, Localizer.Culture))
+            {
+                _culture = Localizer.Culture;
+                _model.Relocalize();
+            }
+            var grouping = SettingsService.Current.Grouping;
+            if (grouping == _grouping)
+                return;
+            _grouping = grouping;
+            _model.Grouping = grouping;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                SettingsService.Changed -= OnSettingsChanged;
+            base.Dispose(disposing);
+        }
+
+        /// <summary>Called by VS after the pane is sited; Package is known here, not in the constructor.</summary>
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _package = (AsyncPackage)Package;
+            StartLoading();
+        }
+
+        private void StartLoading()
+        {
+            _loading?.Cancel();
+            _loading = new CancellationTokenSource();
+            var token = _loading.Token;
+            _package.JoinableTaskFactory.RunAsync(() => LoadAsync(token)).FileAndForget("ShortcutCheatsheet/Load");
+        }
+
+        private async Task LoadAsync(CancellationToken token)
+        {
+            await _package.JoinableTaskFactory.SwitchToMainThreadAsync(token);
+            _model.IsBusy = true;
+            try
+            {
+                var collection = await CheatSheetCollector.CollectAsync(_package, token);
+                await _package.JoinableTaskFactory.SwitchToMainThreadAsync(token);
+                Diagnostics.Log(collection);
+                _model.Sheet = collection.Sheet;
+                _control.FocusSearch();
+            }
+            catch (OperationCanceledException)
+            {
+                // A newer load replaced this one.
+            }
+            catch (Exception ex)
+            {
+                await _package.JoinableTaskFactory.SwitchToMainThreadAsync();
+                ActivityLog.TryLogError("Shortcut Cheatsheet", "Collecting shortcuts failed: " + ex);
+                _model.Summary = Localizer.Get(Strings.CollectFailed);
+            }
+            finally
+            {
+                await _package.JoinableTaskFactory.SwitchToMainThreadAsync();
+                _model.IsBusy = false;
+            }
+        }
+
+        /// <summary>The format chosen last time in this session (1-based, as the dialog counts).</summary>
+        private int _formatIndex = 1;
+
+        private void Export()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var document = _model.CreateExport();
+            if (document == null)
+                return;
+            var dialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Title = Localizer.Get(Strings.ExportDialogTitle),
+                FileName = Localizer.Get(Strings.ExportFileName),
+                Filter = Exporter.DialogFilter,
+                FilterIndex = _formatIndex,
+                AddExtension = true,
+            };
+            if (dialog.ShowDialog() != true)
+                return;
+            _formatIndex = dialog.FilterIndex;
+
+            // The extension decides; the chosen filter only when the name has none of ours.
+            var format = Exporter.FromPath(dialog.FileName) ?? Exporter.Formats[Math.Max(0, dialog.FilterIndex - 1)].Format;
+            string path = Exporter.FromPath(dialog.FileName) == null
+                ? dialog.FileName + Exporter.Formats.First(f => f.Format == format).Extension
+                : dialog.FileName;
+            try
+            {
+                var files = Exporter.Write(document, format, path, SettingsService.Current.ToRenderOptions());
+                _model.Summary = files.Count == 1
+                    ? Localizer.Format(Strings.ExportSavedFormat, Path.GetFileName(files[0]))
+                    : Localizer.Format(Strings.ExportSavedPagesFormat, files.Count, Path.GetFileName(files[0]), Path.GetFileName(files[files.Count - 1]));
+            }
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            {
+                // The user chose the file, so this is something they can act on.
+                _model.Summary = Localizer.Format(Strings.ExportFailedFormat, ex.Message);
+            }
+        }
+    }
+}

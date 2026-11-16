@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json.schemastore.org/vsix-publish",
+  "categories": ["coding", "other"],
+  "identity": {
+    "internalName": "ShortcutCheatsheet"
+  },
+  "overview": "README.md",
+  "priceCategory": "free",
+  "publisher": "hnsoftwaredevelopment",
+  "private": false,
+  "qna": true,
+  "repo": "https://github.com/hnsoftwaredevelopment/VisualStudioShortcutCheatsheet",
+  "assetFiles": [
+    { "pathOnDisk": "docs/images/window.png", "targetPath": "docs/images/window.png" },
+    { "pathOnDisk": "docs/images/search.png", "targetPath": "docs/images/search.png" },
+    { "pathOnDisk": "docs/images/extensions.png", "targetPath": "docs/images/extensions.png" },
+    { "pathOnDisk": "docs/images/yours.png", "targetPath": "docs/images/yours.png" },
+    { "pathOnDisk": "docs/images/export-pdf.png", "targetPath": "docs/images/export-pdf.png" },
+    { "pathOnDisk": "docs/images/export-html.png", "targetPath": "docs/images/export-html.png" },
+    { "pathOnDisk": "docs/images/options.png", "targetPath": "docs/images/options.png" }
+  ]
+}

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Names of the legacy options page, used by [ProvideOptionPage]. -->
+  <data name="100" xml:space="preserve">
+    <value>Shortcut Cheatsheet</value>
+  </data>
+  <data name="101" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <!-- The options (registration.json and the legacy page). -->
+  <data name="OptionsRootDescription" xml:space="preserve">
+    <value>Shortcut Cheatsheet 창과 내보내기에 대한 설정입니다.</value>
+  </data>
+  <data name="OptionsCategoryGeneral" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="OptionsCategoryExport" xml:space="preserve">
+    <value>내보내기</value>
+  </data>
+  <data name="OptionsLanguageName" xml:space="preserve">
+    <value>언어</value>
+  </data>
+  <data name="OptionsLanguageDescription" xml:space="preserve">
+    <value>창과 내보내기의 언어입니다. 자동은 Visual Studio의 언어를 사용하며, 확장에 해당 언어가 없으면 영어를 사용합니다.</value>
+  </data>
+  <data name="LanguageAutomatic" xml:space="preserve">
+    <value>자동</value>
+  </data>
+  <data name="OptionsGroupingName" xml:space="preserve">
+    <value>그룹화 기준</value>
+  </data>
+  <data name="OptionsGroupingDescription" xml:space="preserve">
+    <value>창을 열 때 바로 가기 키를 그룹화하는 방법입니다. 창에서 언제든 변경할 수 있습니다.</value>
+  </data>
+  <data name="GroupingScope" xml:space="preserve">
+    <value>적용 위치</value>
+  </data>
+  <data name="GroupingCategory" xml:space="preserve">
+    <value>범주</value>
+  </data>
+  <data name="GroupingExtension" xml:space="preserve">
+    <value>확장</value>
+  </data>
+  <data name="GroupingKeys" xml:space="preserve">
+    <value>키(그룹 없음)</value>
+  </data>
+  <data name="OptionsPaperName" xml:space="preserve">
+    <value>용지 크기</value>
+  </data>
+  <data name="OptionsPaperDescription" xml:space="preserve">
+    <value>PDF 및 PNG 내보내기의 페이지 크기입니다. 자동은 Windows 지역에 따라 북미에서는 Letter, 그 외에는 A4를 사용합니다.</value>
+  </data>
+  <data name="PaperChoiceAutomatic" xml:space="preserve">
+    <value>자동</value>
+  </data>
+  <data name="PaperChoiceA4" xml:space="preserve">
+    <value>A4</value>
+  </data>
+  <data name="PaperChoiceLetter" xml:space="preserve">
+    <value>Letter</value>
+  </data>
+  <data name="OptionsThemeName" xml:space="preserve">
+    <value>색</value>
+  </data>
+  <data name="OptionsThemeDescription" xml:space="preserve">
+    <value>PDF 및 PNG 내보내기의 색입니다. 밝게는 인쇄에, 어둡게는 어두운 테마의 화면에서 읽기에 적합합니다.</value>
+  </data>
+  <data name="ExportThemeLight" xml:space="preserve">
+    <value>밝게</value>
+  </data>
+  <data name="ExportThemeDark" xml:space="preserve">
+    <value>어둡게</value>
+  </data>
+  <data name="OptionsColumnsName" xml:space="preserve">
+    <value>페이지당 열 수</value>
+  </data>
+  <data name="OptionsColumnsDescription" xml:space="preserve">
+    <value>PDF 또는 PNG 페이지의 열 수입니다. 열이 적을수록 긴 명령 이름을 위한 공간이 넓어집니다.</value>
+  </data>
+  <!-- The window. -->
+  <data name="WindowSearchLabel" xml:space="preserve">
+    <value>검색</value>
+  </data>
+  <data name="WindowSearchHint" xml:space="preserve">
+    <value>이름 또는 키로 검색(예:  ctrl+e,v)</value>
+  </data>
+  <data name="WindowGroupBy" xml:space="preserve">
+    <value>그룹화 기준</value>
+  </data>
+  <data name="WindowRefresh" xml:space="preserve">
+    <value>새로 고침</value>
+  </data>
+  <data name="WindowExport" xml:space="preserve">
+    <value>내보내기...</value>
+  </data>
+  <data name="WindowOnlyExtensions" xml:space="preserve">
+    <value>확장만</value>
+  </data>
+  <data name="WindowOnlyCustom" xml:space="preserve">
+    <value>내가 추가한 항목만</value>
+  </data>
+  <data name="WindowOnlyNotApplied" xml:space="preserve">
+    <value>적용되지 않은 항목만</value>
+  </data>
+  <data name="WindowCollecting" xml:space="preserve">
+    <value>바로 가기 키를 수집하는 중...</value>
+  </data>
+  <data name="WindowList" xml:space="preserve">
+    <value>바로 가기 키</value>
+  </data>
+  <data name="Yours" xml:space="preserve">
+    <value>내 항목</value>
+  </data>
+  <data name="SummaryFormat" xml:space="preserve">
+    <value>{0}.</value>
+  </data>
+  <data name="SummaryListSeparator" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="SummaryShortcutsOne" xml:space="preserve">
+    <value>바로 가기 키 1개</value>
+  </data>
+  <data name="SummaryShortcutsFormat" xml:space="preserve">
+    <value>바로 가기 키 {0}개</value>
+  </data>
+  <data name="SummaryFromExtensionsFormat" xml:space="preserve">
+    <value>확장 {1}개에서 {0}개</value>
+  </data>
+  <data name="SummaryAddedByYouFormat" xml:space="preserve">
+    <value>내가 추가 {0}개</value>
+  </data>
+  <data name="SummaryNotAppliedFormat" xml:space="preserve">
+    <value>적용 안 됨 {0}개</value>
+  </data>
+  <data name="SummaryShowingFormat" xml:space="preserve">
+    <value>{0}개 표시.</value>
+  </data>
+  <data name="UsedByFormat" xml:space="preserve">
+    <value>{0}에서 이 키를 사용하려고 하지만 {1}에서 사용 중입니다.</value>
+  </data>
+  <data name="ToolTipFromFormat" xml:space="preserve">
+    <value>출처: {0}</value>
+  </data>
+  <data name="ToolTipAddedByYou" xml:space="preserve">
+    <value>내가 추가함</value>
+  </data>
+  <data name="ToolTipNotAppliedFormat" xml:space="preserve">
+    <value>적용 안 됨: 이 키는 {0}에서 사용 중입니다.
+이 명령을 사용하려면 Tools &gt; Options &gt; Environment &gt; Keyboard에서 다른 키를 할당하세요.</value>
+  </data>
+  <data name="FilterSearchFormat" xml:space="preserve">
+    <value>검색 '{0}'</value>
+  </data>
+  <data name="FilterOnlyExtensions" xml:space="preserve">
+    <value>확장만</value>
+  </data>
+  <data name="FilterOnlyCustom" xml:space="preserve">
+    <value>내가 추가한 항목만</value>
+  </data>
+  <data name="FilterOnlyNotApplied" xml:space="preserve">
+    <value>적용되지 않은 항목만</value>
+  </data>
+  <data name="CollectFailed" xml:space="preserve">
+    <value>바로 가기 키를 수집할 수 없습니다. 새로 고침을 클릭하여 다시 시도하세요.</value>
+  </data>
+  <data name="ExportDialogTitle" xml:space="preserve">
+    <value>바로 가기 키 내보내기</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>바로 가기 키</value>
+  </data>
+  <data name="ExportSavedFormat" xml:space="preserve">
+    <value>{0}을(를) 저장했습니다.</value>
+  </data>
+  <data name="ExportSavedPagesFormat" xml:space="preserve">
+    <value>{0}페이지를 저장했습니다: {1} ~ {2}.</value>
+  </data>
+  <data name="ExportFailedFormat" xml:space="preserve">
+    <value>저장하지 못했습니다: {0}</value>
+  </data>
+  <data name="FormatPng" xml:space="preserve">
+    <value>PNG 이미지</value>
+  </data>
+  <data name="FormatHtml" xml:space="preserve">
+    <value>웹 페이지</value>
+  </data>
+  <data name="FormatCsv" xml:space="preserve">
+    <value>Excel용 CSV</value>
+  </data>
+  <!-- PDF, PNG, HTML and Markdown exports. JSON, XML and CSV stay English. -->
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Visual Studio 바로 가기 키</value>
+  </data>
+  <data name="ExportContinuedFormat" xml:space="preserve">
+    <value>{0}(계속)</value>
+  </data>
+  <data name="ExportFooter" xml:space="preserve">
+    <value>Visual Studio용 Shortcut Cheatsheet</value>
+  </data>
+  <data name="ExportSearchHint" xml:space="preserve">
+    <value>검색(이름, 명령 또는 키)</value>
+  </data>
+  <data name="ExportNoMatch" xml:space="preserve">
+    <value>일치하는 바로 가기 키가 없습니다.</value>
+  </data>
+  <data name="ExportColumnKeys" xml:space="preserve">
+    <value>키</value>
+  </data>
+  <data name="ExportColumnCommand" xml:space="preserve">
+    <value>명령</value>
+  </data>
+  <data name="ExportColumnNotes" xml:space="preserve">
+    <value>참고</value>
+  </data>
+  <data name="NoteNotApplied" xml:space="preserve">
+    <value>적용 안 됨</value>
+  </data>
+  <data name="NoteNotAppliedFormat" xml:space="preserve">
+    <value>적용 안 됨, 이 키는 {0}에서 사용 중</value>
+  </data>
+</root>

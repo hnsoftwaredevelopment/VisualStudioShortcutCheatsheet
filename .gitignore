@@ -7,3 +7,7 @@ obj/
 packages/
 TestResults/
 Builds/
+
+# Personal files: exports for checking and copies from the Claude app
+tools/Shortcuts*.json
+Claude outputs/

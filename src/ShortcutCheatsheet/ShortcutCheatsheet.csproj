@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Classic (non-SDK) VSIX project. Extensions run inside devenv.exe, so it must target .NET Framework 4.8. -->
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>18.0</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">18.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <AssemblyVersion>2026.11.16.5</AssemblyVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{CED5F11C-A3A7-490B-ADEB-AF89084B0D07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShortcutCheatsheet</RootNamespace>
+    <AssemblyName>ShortcutCheatsheet</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <UseCodebase>true</UseCodebase>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+    <StartAction>Program</StartAction>
+    <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\InternalsVisibleTo.cs" />
+    <Compile Include="CommandTables\CommandTable.cs" />
+    <Compile Include="CommandTables\CommandTableReader.cs" />
+    <Compile Include="CommandTables\CommandTableResource.cs" />
+    <Compile Include="CommandTables\CtoDecompressor.cs" />
+    <Compile Include="CommandTables\PkgdefMenus.cs" />
+    <Compile Include="Collecting\CheatSheetCollector.cs" />
+    <Compile Include="Collecting\Customizations.cs" />
+    <Compile Include="Collecting\Diagnostics.cs" />
+    <Compile Include="Collecting\DteBindingReader.cs" />
+    <Compile Include="Collecting\RawBinding.cs" />
+    <Compile Include="Export\ExportDocument.cs" />
+    <Compile Include="Export\Exporter.cs" />
+    <Compile Include="Export\HtmlExporter.cs" />
+    <Compile Include="Export\ImageExporters.cs" />
+    <Compile Include="Export\JsonExporter.cs" />
+    <Compile Include="Export\SheetRenderer.cs" />
+    <Compile Include="Export\TextExporters.cs" />
+    <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Options\ExtensionLanguage.cs" />
+    <Compile Include="Options\ExtensionSettings.cs" />
+    <Compile Include="Options\GeneralOptionsPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Options\SettingsService.cs" />
+    <Compile Include="Model\CheatSheet.cs" />
+    <Compile Include="Model\CheatSheetBuilder.cs" />
+    <Compile Include="Model\CommandNames.cs" />
+    <Compile Include="Origin\ExtensionCommands.cs" />
+    <Compile Include="Origin\ManifestInfo.cs" />
+    <Compile Include="Origin\PackageTables.cs" />
+    <Compile Include="Origin\PkgdefPackages.cs" />
+    <Compile Include="ImageMonikers.cs" />
+    <Compile Include="Model\KeyChord.cs" />
+    <Compile Include="Model\KeyText.cs" />
+    <Compile Include="Model\ShortcutView.cs" />
+    <Compile Include="ToolWindow\CheatsheetViewModel.cs" />
+    <Compile Include="ToolWindow\CheatsheetControl.xaml.cs">
+      <DependentUpon>CheatsheetControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShortcutCheatsheetPackage.cs" />
+    <Compile Include="ToolWindow\CheatsheetWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ToolWindow\CheatsheetControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- LogicalName "VSPackage" is where VS looks for package strings (registration.json, ProvideOptionPage).
+         The compiled command table (Menus.ctmenu) is merged into the same resource. -->
+    <EmbeddedResource Include="Localization\Strings.resx">
+      <LogicalName>VSPackage.resources</LogicalName>
+      <MergeWithCTO>true</MergeWithCTO>
+    </EmbeddedResource>
+    <!-- Translations: satellite assemblies (nl\ShortcutCheatsheet.resources.dll, ...), also named VSPackage. -->
+    <EmbeddedResource Include="Localization\Strings.cs.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.cs.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.de.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.de.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.es.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.es.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.fr.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.fr.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.it.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.it.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.ja.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.ja.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.ko.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.ko.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.nl.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.nl.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.pl.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.pl.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.pt-BR.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.pt-BR.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.ru.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.ru.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.tr.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.tr.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.zh-Hans.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.zh-Hans.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.zh-Hant.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.zh-Hant.resources</LogicalName></EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <VSCTCompile Include="ShortcutCheatsheetPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Icon: Resources\ShortcutCheatsheet.svg is the source, the PNG files are exports of it. -->
+    <Content Include="Resources\Icon-128.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\Icon-256.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <!-- Icon-32.png is in the DLL as a WPF resource: the image manifest refers to it with a pack URI. -->
+    <Resource Include="Resources\Icon-32.png" />
+    <Content Include="ShortcutCheatsheet.imagemanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Options\registration.json">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="Resources\Icon-90.png" />
+    <None Include="Resources\ShortcutCheatsheet.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- ExcludeAssets="runtime": VS already ships these assemblies. -->
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="18.9.820" />
+  </ItemGroup>
+  <!-- Code shared with the other extensions (git submodule, see external\ExtensionCommon\README.md). -->
+  <Import Project="..\..\external\ExtensionCommon\ExtensionCommon.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

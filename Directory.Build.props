@@ -1,0 +1,8 @@
+<Project>
+  <!-- All build output goes to Builds\<project name>\ in the repository root instead of bin\ next to each project.
+       The same rule exists one folder up on the developer machine; this copy makes it work in a plain clone (GitHub Actions). -->
+  <PropertyGroup>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)Builds\$(MSBuildProjectName)\</BaseOutputPath>
+    <Company>HN Software Development</Company>
+  </PropertyGroup>
+</Project>
