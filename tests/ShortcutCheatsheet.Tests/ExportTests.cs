@@ -85,17 +85,14 @@ namespace ShortcutCheatsheet.Tests
         }
 
         [TestMethod]
-        public void Markdown_KeysAsCodeAndEscaped()
+        public void Markdown_KeysAsKbdAndEscaped()
         {
             string md = MarkdownExporter.ToText(Document());
             StringAssert.StartsWith(md, "# Visual Studio shortcuts");
             StringAssert.Contains(md, "## Global");
             StringAssert.Contains(md, "### Build");
-            StringAssert.Contains(md, "| `Ctrl+E, V` | Duplicate |");
-            Assert.IsFalse(md.Contains("<kbd>"), "Obsidian shows <kbd> at the start of a cell as text");
-            Assert.AreEqual("`` Ctrl+` ``", MarkdownExporter.Keys("Ctrl+`"));
-            Assert.AreEqual("`Ctrl+\\|`", MarkdownExporter.Keys("Ctrl+|"));
-            StringAssert.Contains(md, "| `Alt+↑` |");
+            StringAssert.Contains(md, "| <kbd>Ctrl</kbd>+<kbd>E</kbd>, <kbd>V</kbd> | Duplicate |");
+            StringAssert.Contains(md, "<kbd>Alt</kbd>+<kbd>\u2191</kbd>");
             StringAssert.Contains(md, "Move \\| Up \\<fast> | yours |");
             StringAssert.Contains(md, "not applied, the keys are used by Build Solution");
             // Every table row has the same number of cells.

@@ -73,10 +73,7 @@ namespace ShortcutCheatsheet.Export
         }
     }
 
-    /// <summary>
-    /// Tables per group with the keys as code: `Ctrl+K, Ctrl+→`. Not &lt;kbd&gt;: Obsidian shows HTML at the start of a
-    /// table cell as text, and a code span looks the same in every viewer.
-    /// </summary>
+    /// <summary>Tables per group with the keys in &lt;kbd&gt;, which GitHub and most viewers draw as keys.</summary>
     internal static class MarkdownExporter
     {
         public static string ToText(ExportDocument document)
@@ -106,17 +103,20 @@ namespace ShortcutCheatsheet.Export
 
         public static void Write(ExportDocument document, Stream output) => CsvExporter.WriteText(output, ToText(document), withBom: false);
 
-        /// <summary>
-        /// The keys as one code span, arrows and Enter as symbols. A pipe still splits a table cell inside a code span,
-        /// so it is escaped; a backtick ("Ctrl+`") needs a double-backtick span with spaces.
-        /// </summary>
-        internal static string Keys(string keys)
+        private static string Keys(string keys) =>
+            string.Join(", ", KeyChord.Parse(keys).Select(stroke => string.Join("+", stroke.Select(k => "<kbd>" + KeyText(KeyChord.Display(k)) + "</kbd>"))));
+
+        /// <summary>A key inside &lt;kbd&gt;: HTML-encoded, and the characters Markdown still acts on there escaped.</summary>
+        private static string KeyText(string key)
         {
-            string text = string.Join(", ", KeyChord.Parse(keys).Select(stroke => string.Join("+", stroke.Select(KeyChord.Display))));
-            if (text.Length == 0)
-                return string.Empty;
-            text = text.Replace("|", "\\|");
-            return text.Contains("`") ? "`` " + text + " ``" : "`" + text + "`";
+            var result = new StringBuilder();
+            foreach (char c in WebUtility.HtmlEncode(key))
+            {
+                if (c == '|' || c == '\\' || c == '*' || c == '_' || c == '`')
+                    result.Append('\\');
+                result.Append(c);
+            }
+            return result.ToString();
         }
 
         /// <summary>Pipes split the table; backslash, * and _ change the text. HTML-like text is shown as typed.</summary>
