@@ -32,7 +32,7 @@ namespace ShortcutCheatsheet.Tests
             Assert.IsFalse(RawBinding.TrySplit("Global::", out _, out _));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Edit.CommentSelection", null, "Edit", "Comment Selection")]
         [DataRow("Debug.Autos.Search", null, "Debug", "Autos Search")]
         [DataRow("EditorContextMenus.CodeWindow.Markdown.MakeBold", null, "Markdown", "Make Bold")]
