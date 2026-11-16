@@ -42,6 +42,7 @@ namespace ShortcutCheatsheet.Collecting
             var raw = DteBindingReader.Read(dte, out int commands);
             long dteTime = watch.ElapsedMilliseconds;
             string version = dte.Edition + " " + dte.Version;
+            string ideFolder = Path.GetDirectoryName(dte.FullName); // ...\Common7\IDE, where devenv.exe is
             string settingsFile = Path.Combine(new ShellSettingsManager(package).GetApplicationDataFolder(ApplicationDataFolder.LocalSettings), "settings.json");
 
             var list = await InstalledExtensions.GetAsync(package);
@@ -49,7 +50,7 @@ namespace ShortcutCheatsheet.Collecting
             token.ThrowIfCancellationRequested();
 
             watch.Restart();
-            var origins = ExtensionCommands.Build(list.Sources, token);
+            var origins = ExtensionCommands.Build(list.Sources, token).WithVisualStudioNames(ideFolder, token);
             long originTime = watch.ElapsedMilliseconds;
             var customizations = ReadCustomizations(settingsFile);
 

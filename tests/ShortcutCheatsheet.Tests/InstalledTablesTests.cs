@@ -63,5 +63,27 @@ namespace ShortcutCheatsheet.Tests
             TestContext.WriteLine($"read={read} keys={keys} failures={failures.Count} time={watch.ElapsedMilliseconds} ms");
             Assert.AreEqual(0, failures.Count, string.Join(Environment.NewLine, failures));
         }
+
+        [TestMethod]
+        public void Visual_Studio_names_commands_that_DTE_does_not()
+        {
+            // The merge editor's "Take Incoming" has no canonical name in DTE; VS's own command table has its text.
+            string vs = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Microsoft Visual Studio\18");
+            string ide = Directory.Exists(vs)
+                ? Directory.EnumerateDirectories(vs).SelectMany(e => new[] { Path.Combine(e, @"Common7\IDE") }.Concat(Directory.EnumerateDirectories(e).Select(c => Path.Combine(c, @"Common7\IDE")))).FirstOrDefault(Directory.Exists)
+                : null;
+            if (ide == null)
+                Assert.Inconclusive("Visual Studio 2026 is not installed.");
+
+            var watch = Stopwatch.StartNew();
+            var origins = ShortcutCheatsheet.Origin.ExtensionCommands.Build(Enumerable.Empty<ExtensionCommon.VisualStudio.ExtensionSource>()).WithVisualStudioNames(ide);
+            TestContext.WriteLine($"{watch.ElapsedMilliseconds} ms");
+            Assert.IsTrue(origins.TryFindVisualStudio(new CommandId(new Guid("a0a3cdb6-6b05-493f-af52-bb8975ab2055"), 0x0508), out var takeIncoming));
+            Assert.AreEqual("Take Incoming", takeIncoming.ButtonText);
+
+            watch.Restart();
+            origins.WithVisualStudioNames(ide);
+            Assert.IsTrue(watch.ElapsedMilliseconds < 100, "the second time comes from the cache");
+        }
     }
 }

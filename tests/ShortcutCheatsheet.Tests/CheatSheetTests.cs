@@ -97,23 +97,60 @@ namespace ShortcutCheatsheet.Tests
         }
 
         [TestMethod]
-        public void Marks_conflicts_only_within_one_scope()
+        public void Marks_conflicts_you_can_solve_within_one_scope()
         {
+            // Only when an extension or your own shortcut is involved: two VS commands on one key are VS's business.
+            var custom = Customizations.Parse("{\"environment.keyboardShortcuts.customizations\":[{\"command\":\"Edit.MyMacro\",\"shortcut\":\"F10\",\"scope\":\"Text Editor\",\"isRemoval\":false}]}");
             var sheet = CheatSheetBuilder.Build(new[]
             {
                 Vs("Merge.TakeLeft", "Merge Editor Window", "F10", 1),
                 Vs("Merge.NextConflict", "Merge Editor Window", "F10", 2),
                 Vs("Debug.StepOver", "Global", "F10", 3),
-                Vs("Edit.Duplicate", "Text Editor", "Ctrl+E, V", 4),
-                Vs("Edit.Duplicate", "Text Editor", "Ctrl+E,V", 4), // the same binding written differently
-            }, null, null, "Test", Now);
+                Vs("Edit.Duplicate", "Text Editor", "F10", 4),
+                Vs("Edit.MyMacro", "Text Editor", "F10", 7),
+                Vs("Edit.LineDown", "Text Editor", "Ctrl+E, V", 5),
+                Vs("Edit.LineDown", "Text Editor", "Ctrl+E,V", 5), // the same binding written differently
+            }, null, custom, "Test", Now);
 
-            var takeLeft = sheet.Shortcuts.Single(s => s.Command == "Merge.TakeLeft");
-            CollectionAssert.AreEqual(new[] { "Merge.NextConflict" }, takeLeft.ConflictsWith);
+            Assert.IsNull(sheet.Shortcuts.Single(s => s.Command == "Merge.TakeLeft").ConflictsWith, "both are VS commands");
+            CollectionAssert.AreEqual(new[] { "Edit.MyMacro" }, sheet.Shortcuts.Single(s => s.Command == "Edit.Duplicate").ConflictsWith);
+            CollectionAssert.AreEqual(new[] { "Edit.Duplicate" }, sheet.Shortcuts.Single(s => s.Command == "Edit.MyMacro").ConflictsWith);
             Assert.IsNull(sheet.Shortcuts.Single(s => s.Command == "Debug.StepOver").ConflictsWith, "Global and a specific scope do not conflict");
-            Assert.IsTrue(sheet.Shortcuts.Where(s => s.Command == "Edit.Duplicate").All(s => s.ConflictsWith == null), "one command is no conflict");
+            Assert.AreEqual(1, sheet.Shortcuts.Count(s => s.Command == "Edit.LineDown"), "duplicate removed");
         }
 
+        [TestMethod]
+        public void Uses_the_extension_as_category_when_the_name_has_none()
+        {
+            var origins = ExtensionCommands.Build(new[] { new ExtensionSource(BuildOutput(), null, false) });
+            var unnamedPrefix = new RawBinding("ShortcutCheatsheet", "", ShortcutCheatsheetPackage.CommandSet, (uint)ShortcutCheatsheetPackage.OpenWindowCommandId, "Global", "Ctrl+K, Ctrl+K");
+            var sheet = CheatSheetBuilder.Build(new[] { unnamedPrefix }, origins, null, "Test", Now);
+            Assert.AreEqual("Shortcut Cheatsheet", sheet.Shortcuts.Single().Category);
+        }
+
+        [TestMethod]
+        public void A_system_component_counts_as_Visual_Studio()
+        {
+            // Container Tools and the like sit in Common7\IDE\Extensions but are installed with a workload.
+            string folder = Path.Combine(Path.GetTempPath(), "ShortcutCheatsheet.Tests." + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(folder);
+            try
+            {
+                foreach (string file in Directory.GetFiles(BuildOutput()).Where(f => !f.EndsWith(".vsix", StringComparison.OrdinalIgnoreCase)))
+                    File.Copy(file, Path.Combine(folder, Path.GetFileName(file)));
+                string manifest = Path.Combine(folder, "extension.vsixmanifest");
+                string xml = File.ReadAllText(manifest);
+                File.WriteAllText(manifest, System.Text.RegularExpressions.Regex.Replace(xml, @"<Installation(\s|>)", "<Installation SystemComponent=\"true\"$1"));
+
+                var origins = ExtensionCommands.Build(new[] { new ExtensionSource(folder, null, false) });
+                Assert.AreEqual(0, origins.Extensions.Count);
+                Assert.IsFalse(origins.TryFind(new CommandTables.CommandId(ShortcutCheatsheetPackage.CommandSet, (uint)ShortcutCheatsheetPackage.OpenWindowCommandId), out _, out _));
+            }
+            finally
+            {
+                Directory.Delete(folder, true);
+            }
+        }
         [TestMethod]
         public void Sorts_global_first_and_removes_duplicates()
         {

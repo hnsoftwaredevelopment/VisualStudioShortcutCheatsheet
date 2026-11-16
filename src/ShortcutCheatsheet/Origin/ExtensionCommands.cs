@@ -30,12 +30,14 @@ namespace ShortcutCheatsheet.Origin
 
     /// <summary>
     /// Which extension defines which command: from the command table of every package of every enabled extension.
-    /// Commands that are in no extension table are taken to be part of Visual Studio.
+    /// Commands that are in no extension table are taken to be part of Visual Studio. Optionally also the tables of
+    /// VS itself, only for names: DTE has no name for some of its own commands.
     /// </summary>
     internal sealed class ExtensionCommands
     {
         private readonly Dictionary<CommandId, (ExtensionInfo Extension, CommandDefinition Command)> _commands =
             new Dictionary<CommandId, (ExtensionInfo, CommandDefinition)>();
+        private IReadOnlyDictionary<CommandId, CommandDefinition> _visualStudio = new Dictionary<CommandId, CommandDefinition>();
 
         private ExtensionCommands()
         {
@@ -45,6 +47,7 @@ namespace ShortcutCheatsheet.Origin
 
         public IReadOnlyList<ExtensionInfo> Extensions { get; private set; } = Array.Empty<ExtensionInfo>();
 
+        /// <summary>The extension that defines the command; false for a command of Visual Studio.</summary>
         public bool TryFind(CommandId id, out ExtensionInfo extension, out CommandDefinition command)
         {
             if (_commands.TryGetValue(id, out var found))
@@ -58,6 +61,9 @@ namespace ShortcutCheatsheet.Origin
             return false;
         }
 
+        /// <summary>A command of Visual Studio itself, from its own command tables (read with <see cref="WithVisualStudioNames"/>).</summary>
+        public bool TryFindVisualStudio(CommandId id, out CommandDefinition command) => _visualStudio.TryGetValue(id, out command);
+
         /// <summary>Reads the extension folders. Slow (disk), so call it on a background thread.</summary>
         public static ExtensionCommands Build(IEnumerable<ExtensionSource> sources, CancellationToken token = default)
         {
@@ -67,6 +73,8 @@ namespace ShortcutCheatsheet.Origin
             {
                 token.ThrowIfCancellationRequested();
                 var manifest = ManifestInfo.Read(source.Folder);
+                if (manifest?.IsSystemComponent == true)
+                    continue; // installed with VS (a workload), so its commands count as VS
                 var extension = new ExtensionInfo(source.Owner ?? manifest?.Name ?? Path.GetFileName(source.Folder.TrimEnd('\\')),
                     manifest?.Version, source.Folder);
                 extensions.Add(extension);
@@ -74,6 +82,13 @@ namespace ShortcutCheatsheet.Origin
             }
             result.Extensions = extensions;
             return result;
+        }
+
+        /// <summary>Adds the names of VS's own commands. The tables are read once per IDE folder and kept: about 4 seconds.</summary>
+        public ExtensionCommands WithVisualStudioNames(string ideFolder, CancellationToken token = default)
+        {
+            _visualStudio = VisualStudioNames.Get(ideFolder, token);
+            return this;
         }
 
         private void AddTables(ExtensionInfo extension)
@@ -89,43 +104,12 @@ namespace ShortcutCheatsheet.Origin
                 return;
             }
 
+            var problems = new List<string>();
             foreach (string pkgdef in pkgdefs)
-            {
-                string text;
-                try
-                {
-                    text = File.ReadAllText(pkgdef);
-                }
-                catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
-                {
-                    extension.Problem = ex.Message;
-                    continue;
-                }
-
-                var menus = PkgdefMenus.Parse(text);
-                if (menus.Count == 0)
-                    continue;
-                var assemblies = PkgdefPackages.Assemblies(text, extension.Folder);
-                foreach (var menu in menus)
-                {
-                    string dll = !string.IsNullOrEmpty(menu.Satellite)
-                        ? PkgdefPackages.ResolveFolder(menu.Satellite, extension.Folder)
-                        : assemblies.TryGetValue(menu.Package, out string path) ? path : Path.ChangeExtension(pkgdef, ".dll");
-                    if (dll == null || !File.Exists(dll))
-                        continue;
-                    try
-                    {
-                        byte[] bytes = CommandTableResource.FindInPackage(dll, menu.ResourceName);
-                        if (bytes == null)
-                            continue; // native resource or another layout: nothing to read here
-                        Add(extension, CommandTableReader.Read(bytes));
-                    }
-                    catch (FormatException ex)
-                    {
-                        extension.Problem = Path.GetFileName(dll) + ": " + ex.Message;
-                    }
-                }
-            }
+                foreach (var table in PackageTables.Read(pkgdef, extension.Folder, problems))
+                    Add(extension, table);
+            if (problems.Count > 0)
+                extension.Problem = string.Join("; ", problems);
         }
 
         private void Add(ExtensionInfo extension, CommandTable table)
@@ -140,6 +124,52 @@ namespace ShortcutCheatsheet.Origin
                 }
             }
             extension.DefaultKeyBindings += table.KeyBindings.Count;
+        }
+
+        /// <summary>Command tables of VS itself, cached per IDE folder for the lifetime of the process.</summary>
+        private static class VisualStudioNames
+        {
+            private static readonly object Gate = new object();
+            private static string _folder;
+            private static IReadOnlyDictionary<CommandId, CommandDefinition> _names;
+
+            public static IReadOnlyDictionary<CommandId, CommandDefinition> Get(string ideFolder, CancellationToken token)
+            {
+                lock (Gate)
+                {
+                    if (_names != null && string.Equals(_folder, ideFolder, StringComparison.OrdinalIgnoreCase))
+                        return _names;
+                }
+
+                var names = new Dictionary<CommandId, CommandDefinition>();
+                if (!string.IsNullOrEmpty(ideFolder) && Directory.Exists(ideFolder))
+                {
+                    IEnumerable<string> pkgdefs;
+                    try
+                    {
+                        pkgdefs = Directory.EnumerateFiles(ideFolder, "*.pkgdef", SearchOption.AllDirectories).ToList();
+                    }
+                    catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+                    {
+                        pkgdefs = Enumerable.Empty<string>();
+                    }
+                    foreach (string pkgdef in pkgdefs)
+                    {
+                        token.ThrowIfCancellationRequested();
+                        foreach (var table in PackageTables.Read(pkgdef, Path.GetDirectoryName(pkgdef), null))
+                            foreach (var command in table.Commands)
+                                if (!names.ContainsKey(command.Id))
+                                    names[command.Id] = command;
+                    }
+                }
+
+                lock (Gate)
+                {
+                    _folder = ideFolder;
+                    _names = names;
+                }
+                return names;
+            }
         }
     }
 }

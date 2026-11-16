@@ -121,9 +121,9 @@ namespace ShortcutCheatsheet.CommandTables
                     return table;
                 }
             }
-            catch (Exception ex) when (ex is ArgumentException || ex is BadImageFormatException || ex is IOException || ex is FormatException)
+            catch (Exception ex) when (ex is ArgumentException || ex is BadImageFormatException || ex is IOException || ex is FormatException || ex is NotSupportedException || ex is InvalidOperationException)
             {
-                return null; // not in this file, or not a .resources file
+                return null; // not in this file, not a .resources file, or one with its own reader (such as a compressed one)
             }
         }
     }

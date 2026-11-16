@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Shortcut Cheatsheet")]
 [assembly: AssemblyCopyright("Herbert Nijkamp")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("2026.11.13.3")]
-[assembly: AssemblyFileVersion("2026.11.13.3")]
+[assembly: AssemblyVersion("2026.11.13.5")]
+[assembly: AssemblyFileVersion("2026.11.13.5")]
 
-[assembly: AssemblyInformationalVersion("2026.11.13.3")]
+[assembly: AssemblyInformationalVersion("2026.11.13.5")]
