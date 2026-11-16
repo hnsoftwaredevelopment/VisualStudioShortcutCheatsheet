@@ -78,6 +78,7 @@ namespace ShortcutCheatsheet.ToolWindow
                 var collection = await CheatSheetCollector.CollectAsync(_package, token);
                 await _package.JoinableTaskFactory.SwitchToMainThreadAsync(token);
                 _collection = collection;
+                Diagnostics.Log(collection);
                 _summary.Text = Describe(collection);
                 _export.IsEnabled = true;
             }
@@ -104,9 +105,8 @@ namespace ShortcutCheatsheet.ToolWindow
                 $"{fromExtensions} from {sheet.Extensions.Count(e => e.Shortcuts > 0)} extensions (extensions read in {c.OriginMilliseconds} ms).\n" +
                 $"{custom} added by you, {sheet.RemovedByYou} removed by you.\n" +
                 $"{conflicts} shortcuts share their keys with another command in the same scope.\n\n" +
-                string.Join("\n", sheet.Extensions.Where(e => e.Shortcuts > 0 || e.Problem != null)
-                    .Select(e => $"{e.Name} {e.Version}: {e.Shortcuts}" + (e.Problem == null ? "" : " (" + e.Problem + ")")));
-            return c.Problem == null ? text : text + "\n\nExtension Manager not available, read the folders instead: " + c.Problem;
+                string.Join("\n", sheet.Extensions.Where(e => e.Shortcuts > 0).Select(e => $"{e.Name} {e.Version}: {e.Shortcuts}"));
+            return text;
         }
 
         private void Export()

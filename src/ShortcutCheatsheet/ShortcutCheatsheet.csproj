@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>18.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">18.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <AssemblyVersion>2026.11.13.5</AssemblyVersion>
+    <AssemblyVersion>2026.11.16.0</AssemblyVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -54,6 +54,7 @@
     <Compile Include="CommandTables\PkgdefMenus.cs" />
     <Compile Include="Collecting\CheatSheetCollector.cs" />
     <Compile Include="Collecting\Customizations.cs" />
+    <Compile Include="Collecting\Diagnostics.cs" />
     <Compile Include="Collecting\DteBindingReader.cs" />
     <Compile Include="Collecting\RawBinding.cs" />
     <Compile Include="Export\JsonExporter.cs" />
