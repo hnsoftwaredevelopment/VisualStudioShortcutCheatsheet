@@ -20,7 +20,8 @@ namespace ShortcutCheatsheet
     [ProvideOptionPage(typeof(GeneralOptionsPage), "Shortcut Cheatsheet", "General", 100, 101, true,
         IsInUnifiedSettings = true, UnifiedSettingsCategoryMoniker = "shortcutCheatsheet.general")]
     [ProvideSettingsManifest(PackageRelativeManifestFile = @"Options\registration.json")]
-    [ProvideMenuResource("Menus.ctmenu", 1)]
+    // Raise the version after every change to the command table, otherwise VS keeps its cached menus and key bindings.
+    [ProvideMenuResource("Menus.ctmenu", 2)]
     // Opens as a tab next to Solution Explorer.
     [ProvideToolWindow(typeof(CheatsheetWindow), Style = VsDockStyle.Tabbed, Window = "3AE79031-E1BC-11D0-8F78-00A0C9110057")]
     public sealed class ShortcutCheatsheetPackage : AsyncPackage

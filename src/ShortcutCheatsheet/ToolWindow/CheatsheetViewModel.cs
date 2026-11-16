@@ -101,6 +101,9 @@ namespace ShortcutCheatsheet.ToolWindow
 
         public string Value => _value;
 
+        /// <summary>The label is also the name screen readers and UI Automation see for the list item.</summary>
+        public override string ToString() => _value;
+
         public void Refresh()
         {
             _value = LocalizedEnumConverter<Grouping>.DisplayName(Key);

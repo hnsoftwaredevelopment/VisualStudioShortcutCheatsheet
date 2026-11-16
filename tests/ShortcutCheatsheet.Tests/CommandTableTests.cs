@@ -101,6 +101,10 @@ namespace ShortcutCheatsheet.Tests
             var command = table.Commands.Single(c => c.Id.Equals(new CommandId(ShortcutCheatsheetPackage.CommandSet, (uint)ShortcutCheatsheetPackage.OpenWindowCommandId)));
             Assert.AreEqual("Shortcut Cheatsheet", command.ButtonText);
             Assert.AreEqual(".View.ShortcutCheatsheet", command.CanonicalName);
+
+            // The extension brings no default shortcut. A stale .cto once shipped the Ctrl+Shift+B of a trial: the
+            // .vsct was restored from a copy with an older date, so MSBuild did not compile it again.
+            Assert.AreEqual(0, table.KeyBindings.Count, "default key bindings in our own command table");
         }
 
         [TestMethod]
