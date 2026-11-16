@@ -33,7 +33,7 @@ namespace ShortcutCheatsheet.ToolWindow
             (Outer, Inner) = ShortcutView.Groups(shortcut, grouping);
             ShowScope = grouping == Grouping.Keys;
             // The label says nothing new when the group heading or the category already is the extension.
-            ShowExtension = shortcut.Extension != null && grouping != Grouping.Extension && shortcut.Category != shortcut.Extension;
+            ShowExtension = shortcut.Extension != null && !shortcut.NotApplied && grouping != Grouping.Extension && shortcut.Category != shortcut.Extension;
         }
 
         public Shortcut Shortcut { get; }
@@ -43,7 +43,12 @@ namespace ShortcutCheatsheet.ToolWindow
         public string Name => Shortcut.Name;
         public string Extension => Shortcut.Extension;
         public bool IsCustom => Shortcut.IsCustom;
-        public bool HasConflict => Shortcut.ConflictsWith != null;
+        public bool NotApplied => Shortcut.NotApplied;
+
+        /// <summary>"Bookmark Studio wants these keys, but they are used by Build Solution.", for a binding VS did not apply.</summary>
+        public string UsedByText => Shortcut.NotApplied
+            ? $"{Shortcut.Extension} wants these keys, but they are used by {string.Join(", ", Shortcut.UsedBy ?? new List<string>())}."
+            : null;
 
         /// <summary>Without groups the scope is not visible elsewhere, so the row shows it.</summary>
         public bool ShowScope { get; }
@@ -66,8 +71,8 @@ namespace ShortcutCheatsheet.ToolWindow
                     lines.Add("From " + Shortcut.Extension);
                 if (Shortcut.IsCustom)
                     lines.Add("Added by you");
-                if (HasConflict)
-                    lines.Add("Same keys as: " + string.Join(", ", Shortcut.ConflictsWith));
+                if (NotApplied)
+                    lines.Add("Not applied: the keys are used by " + string.Join(", ", Shortcut.UsedBy) + ".\nTo use this command, give it other keys in Tools > Options > Environment > Keyboard.");
                 return string.Join("\n", lines);
             }
         }
@@ -83,7 +88,7 @@ namespace ShortcutCheatsheet.ToolWindow
         private CheatSheet _sheet;
         private string _searchText = string.Empty;
         private Grouping _grouping = Grouping.Scope;
-        private bool _onlyExtensions, _onlyCustom, _onlyConflicts, _expandGroups, _isBusy;
+        private bool _onlyExtensions, _onlyCustom, _onlyNotApplied, _expandGroups, _isBusy;
         private ListCollectionView _items;
         private string _summary = string.Empty;
 
@@ -116,11 +121,11 @@ namespace ShortcutCheatsheet.ToolWindow
                 _sheet = value;
                 // A hidden filter must not stay on, or the list would be empty for no visible reason.
                 if (!HasCustom) _onlyCustom = false;
-                if (!HasConflicts) _onlyConflicts = false;
+                if (!HasNotApplied) _onlyNotApplied = false;
                 OnPropertyChanged(nameof(HasCustom));
-                OnPropertyChanged(nameof(HasConflicts));
+                OnPropertyChanged(nameof(HasNotApplied));
                 OnPropertyChanged(nameof(OnlyCustom));
-                OnPropertyChanged(nameof(OnlyConflicts));
+                OnPropertyChanged(nameof(OnlyNotApplied));
                 Rebuild();
             }
         }
@@ -156,10 +161,10 @@ namespace ShortcutCheatsheet.ToolWindow
             set { if (Set(ref _onlyCustom, value)) Rebuild(); }
         }
 
-        public bool OnlyConflicts
+        public bool OnlyNotApplied
         {
-            get => _onlyConflicts;
-            set { if (Set(ref _onlyConflicts, value)) Rebuild(); }
+            get => _onlyNotApplied;
+            set { if (Set(ref _onlyNotApplied, value)) Rebuild(); }
         }
 
         /// <summary>Groups open by default only when the list is short or filtered; 70 open scopes is a wall.</summary>
@@ -192,7 +197,7 @@ namespace ShortcutCheatsheet.ToolWindow
         /// <summary>A filter only shows when it can find something: no own shortcuts means no "Only added by you".</summary>
         public bool HasCustom => _sheet?.Shortcuts.Any(s => s.IsCustom) == true;
 
-        public bool HasConflicts => _sheet?.Shortcuts.Any(s => s.ConflictsWith != null) == true;
+        public bool HasNotApplied => _sheet?.Shortcuts.Any(s => s.NotApplied) == true;
 
         /// <summary>The visible rows, in order: what an export of "what you see" would contain.</summary>
         public IEnumerable<Shortcut> Visible => _items?.Cast<ShortcutItem>().Select(i => i.Shortcut) ?? Enumerable.Empty<Shortcut>();
@@ -205,7 +210,7 @@ namespace ShortcutCheatsheet.ToolWindow
                 return;
             }
 
-            var filter = new ShortcutFilter { Text = _searchText, OnlyExtensions = _onlyExtensions, OnlyCustom = _onlyCustom, OnlyConflicts = _onlyConflicts };
+            var filter = new ShortcutFilter { Text = _searchText, OnlyExtensions = _onlyExtensions, OnlyCustom = _onlyCustom, OnlyNotApplied = _onlyNotApplied };
             var shown = ShortcutView.Sort(_sheet.Shortcuts.Where(s => ShortcutView.Matches(s, filter)), _grouping)
                 .Select(s => new ShortcutItem(s, _grouping))
                 .ToList();
@@ -224,18 +229,19 @@ namespace ShortcutCheatsheet.ToolWindow
 
         private string Describe(int shown)
         {
-            var sheet = _sheet;
-            int fromExtensions = sheet.Shortcuts.Count(s => s.Extension != null);
-            int extensions = sheet.Shortcuts.Where(s => s.Extension != null).Select(s => s.Extension).Distinct().Count();
-            int conflicts = sheet.Shortcuts.Count(s => s.ConflictsWith != null);
-            int custom = sheet.Shortcuts.Count(s => s.IsCustom);
+            // Not-applied rows are on the sheet but do not work: they are not counted as shortcuts.
+            var working = _sheet.Shortcuts.Where(s => !s.NotApplied).ToList();
+            int fromExtensions = working.Count(s => s.Extension != null);
+            int extensions = working.Where(s => s.Extension != null).Select(s => s.Extension).Distinct().Count();
+            int custom = working.Count(s => s.IsCustom);
+            int notApplied = _sheet.Shortcuts.Count - working.Count;
             // Leave out what is zero: "0 added by you" is noise.
-            var parts = new List<string> { sheet.Shortcuts.Count == 1 ? "1 shortcut" : $"{sheet.Shortcuts.Count} shortcuts" };
+            var parts = new List<string> { working.Count == 1 ? "1 shortcut" : $"{working.Count} shortcuts" };
             if (fromExtensions > 0) parts.Add($"{fromExtensions} from {extensions} extensions");
             if (custom > 0) parts.Add($"{custom} added by you");
-            if (conflicts > 0) parts.Add($"{conflicts} with a conflict");
+            if (notApplied > 0) parts.Add($"{notApplied} not applied");
             string text = string.Join(", ", parts) + ".";
-            return shown == sheet.Shortcuts.Count ? text : text + $" Showing {shown}.";
+            return shown == _sheet.Shortcuts.Count ? text : text + $" Showing {shown}.";
         }
 
         private bool Set<T>(ref T field, T value, [CallerMemberName] string name = null)

@@ -12,11 +12,11 @@ namespace ShortcutCheatsheet.Tests
     public class ViewTests
     {
         private static Shortcut S(string scope, string keys, string name, string category, string command = null,
-            string extension = null, bool custom = false, bool conflict = false) =>
+            string extension = null, bool custom = false, bool notApplied = false) =>
             new Shortcut
             {
                 Scope = scope, Keys = keys, Name = name, Category = category, Command = command, Extension = extension,
-                IsCustom = custom, ConflictsWith = conflict ? new System.Collections.Generic.List<string> { "Other.Command" } : null,
+                IsCustom = custom, NotApplied = notApplied, UsedBy = notApplied ? new System.Collections.Generic.List<string> { "Build Solution" } : null,
             };
 
         [TestMethod]
@@ -54,13 +54,13 @@ namespace ShortcutCheatsheet.Tests
             var model = new ToolWindow.CheatsheetViewModel { OnlyCustom = true };
             model.Sheet = new CheatSheet { Shortcuts = { S("Global", "F5", "Start", "Debug") } };
             Assert.IsFalse(model.HasCustom);
-            Assert.IsFalse(model.HasConflicts);
+            Assert.IsFalse(model.HasNotApplied);
             Assert.IsFalse(model.OnlyCustom, "a hidden filter is switched off");
             Assert.AreEqual("1 shortcut.", model.Summary);
 
-            model.Sheet = new CheatSheet { Shortcuts = { S("Text Editor", "Ctrl+Shift+D", "Duplicate", "Edit", custom: true, conflict: true) } };
+            model.Sheet = new CheatSheet { Shortcuts = { S("Text Editor", "Ctrl+Shift+D", "Duplicate", "Edit", custom: true, notApplied: true) } };
             Assert.IsTrue(model.HasCustom);
-            Assert.IsTrue(model.HasConflicts);
+            Assert.IsTrue(model.HasNotApplied);
         }
 
         [TestMethod]
@@ -79,16 +79,16 @@ namespace ShortcutCheatsheet.Tests
         }
 
         [TestMethod]
-        public void Filters_extensions_your_own_and_conflicts()
+        public void Filters_extensions_your_own_and_not_applied()
         {
             var vs = S("Global", "F5", "Start", "Debug");
-            var ext = S("Global", "Shift+Alt+B", "Bookmark Manager", "View", extension: "Bookmark Studio", conflict: true);
+            var ext = S("Global", "Shift+Alt+B", "Bookmark Manager", "View", extension: "Bookmark Studio", notApplied: true);
             var mine = S("Text Editor", "Ctrl+Shift+D", "Duplicate", "Edit", custom: true);
 
             Assert.IsTrue(new ShortcutFilter().IsEmpty);
             CollectionAssert.AreEqual(new[] { ext }, new[] { vs, ext, mine }.Where(s => ShortcutView.Matches(s, new ShortcutFilter { OnlyExtensions = true })).ToArray());
             CollectionAssert.AreEqual(new[] { mine }, new[] { vs, ext, mine }.Where(s => ShortcutView.Matches(s, new ShortcutFilter { OnlyCustom = true })).ToArray());
-            CollectionAssert.AreEqual(new[] { ext }, new[] { vs, ext, mine }.Where(s => ShortcutView.Matches(s, new ShortcutFilter { OnlyConflicts = true })).ToArray());
+            CollectionAssert.AreEqual(new[] { ext }, new[] { vs, ext, mine }.Where(s => ShortcutView.Matches(s, new ShortcutFilter { OnlyNotApplied = true })).ToArray());
         }
 
         [TestMethod]

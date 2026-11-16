@@ -16,22 +16,26 @@ namespace ShortcutCheatsheet.Collecting
     internal sealed class Customizations
     {
         public const string Moniker = "environment.keyboardShortcuts.customizations";
-        public static readonly Customizations None = new Customizations(new HashSet<string>(), 0);
+        public static readonly Customizations None = new Customizations(new HashSet<string>(), new HashSet<string>());
 
         private readonly HashSet<string> _added;
+        private readonly HashSet<string> _removed;
 
-        private Customizations(HashSet<string> added, int removed)
+        private Customizations(HashSet<string> added, HashSet<string> removed)
         {
             _added = added;
-            Removed = removed;
+            _removed = removed;
         }
 
         public int Added => _added.Count;
 
         /// <summary>Shortcuts of VS or an extension that you removed; DTE no longer lists them.</summary>
-        public int Removed { get; }
+        public int Removed => _removed.Count;
 
         public bool IsAdded(string command, string scope, string keys) => _added.Contains(Key(command, scope, keys));
+
+        /// <summary>You removed this binding yourself: when VS does not apply it, that is your choice, not a clash.</summary>
+        public bool IsRemoved(string command, string scope, string keys) => _removed.Contains(Key(command, scope, keys));
 
         /// <summary>Reads settings.json. The file starts with a comment, which Newtonsoft skips.</summary>
         public static Customizations Parse(string settingsJson)
@@ -52,18 +56,17 @@ namespace ShortcutCheatsheet.Collecting
                 return None;
 
             var added = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            int removed = 0;
+            var removed = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var item in items)
             {
                 if (!(item is JObject entry))
                     continue;
-                if ((bool?)entry["isRemoval"] == true)
-                {
-                    removed++;
-                    continue;
-                }
                 string command = (string)entry["command"], scope = (string)entry["scope"], keys = (string)entry["shortcut"];
-                if (!string.IsNullOrEmpty(command) && !string.IsNullOrEmpty(keys))
+                if (string.IsNullOrEmpty(command) || string.IsNullOrEmpty(keys))
+                    continue;
+                if ((bool?)entry["isRemoval"] == true)
+                    removed.Add(Key(command, scope, keys));
+                else
                     added.Add(Key(command, scope, keys));
             }
             return new Customizations(added, removed);

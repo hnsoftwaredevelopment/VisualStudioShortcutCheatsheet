@@ -46,11 +46,21 @@
             <Setter Property="BorderBrush" Value="{DynamicResource {x:Static platformUI:EnvironmentColors.ToolWindowBorderBrushKey}}" />
         </Style>
 
-        <!-- Two columns of fixed proportion for every row, so names line up. The labels (conflict, yours, extension)
+        <!-- Two columns of fixed proportion for every row, so names line up. The labels (warning, yours, extension)
              sit at the right end of the name column: in a third column of their own they would make the split
              different for rows with and without a label. -->
         <DataTemplate x:Key="Row">
             <Grid Margin="0,1" ToolTip="{Binding ToolTip}">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <!-- A binding VS did not apply does not work: dimmed, with a warning icon and a tooltip. -->
+                            <DataTrigger Binding="{Binding NotApplied}" Value="True">
+                                <Setter Property="Opacity" Value="0.55" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" MinWidth="110" />
                     <ColumnDefinition Width="3*" />
@@ -65,18 +75,23 @@
                 <DockPanel Grid.Column="1" Margin="8,0,0,0" LastChildFill="True">
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                         <imaging:CrispImage Width="16" Height="16" Margin="6,0,0,0" Moniker="{x:Static catalog:KnownMonikers.StatusWarning}"
-                                            Visibility="{Binding HasConflict, Converter={StaticResource Visible}}" />
+                                            Visibility="{Binding NotApplied, Converter={StaticResource Visible}}" />
                         <Border Style="{StaticResource Badge}" Visibility="{Binding IsCustom, Converter={StaticResource Visible}}">
                             <TextBlock Text="yours" FontSize="11" />
                         </Border>
                         <Border Style="{StaticResource Badge}" Visibility="{Binding ShowExtension, Converter={StaticResource Visible}}">
-                            <TextBlock Text="{Binding Extension}" FontSize="11" Opacity="0.85" MaxWidth="120" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding Extension}" FontSize="11" Opacity="0.85" MaxWidth="100" TextTrimming="CharacterEllipsis" />
                         </Border>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                        <TextBlock Text="{Binding Scope}" Margin="8,0,0,0" Opacity="0.6"
-                                   Visibility="{Binding ShowScope, Converter={StaticResource Visible}}" />
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding Scope}" Margin="8,0,0,0" Opacity="0.6"
+                                       Visibility="{Binding ShowScope, Converter={StaticResource Visible}}" />
+                        </StackPanel>
+                        <!-- Why a binding is not applied, under the name: a label next to it would push the name away. -->
+                        <TextBlock Text="{Binding UsedByText}" FontSize="11" TextWrapping="Wrap"
+                                   Visibility="{Binding NotApplied, Converter={StaticResource Visible}}" />
                     </StackPanel>
                 </DockPanel>
             </Grid>
@@ -118,7 +133,7 @@
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
             <CheckBox Content="Only added by you" IsChecked="{Binding OnlyCustom}" Visibility="{Binding HasCustom, Converter={StaticResource Visible}}" Margin="0,2,14,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
-            <CheckBox Content="Only conflicts" IsChecked="{Binding OnlyConflicts}" Visibility="{Binding HasConflicts, Converter={StaticResource Visible}}" Margin="0,2,0,4" VerticalAlignment="Center"
+            <CheckBox Content="Only not applied" IsChecked="{Binding OnlyNotApplied}" Visibility="{Binding HasNotApplied, Converter={StaticResource Visible}}" Margin="0,2,0,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
         </WrapPanel>
 

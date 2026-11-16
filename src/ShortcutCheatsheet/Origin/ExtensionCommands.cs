@@ -45,7 +45,28 @@ namespace ShortcutCheatsheet.Origin
 
         public static readonly ExtensionCommands Empty = new ExtensionCommands();
 
+        private readonly List<(ExtensionInfo Extension, KeyBindingDefinition Binding)> _defaultBindings =
+            new List<(ExtensionInfo, KeyBindingDefinition)>();
+
         public IReadOnlyList<ExtensionInfo> Extensions { get; private set; } = Array.Empty<ExtensionInfo>();
+
+        /// <summary>The key bindings extensions bring along by default; VS skips the ones whose keys are taken.</summary>
+        public IReadOnlyList<(ExtensionInfo Extension, KeyBindingDefinition Binding)> DefaultBindings => _defaultBindings;
+
+        /// <summary>For tests: an index from command tables that are already read.</summary>
+        internal static ExtensionCommands FromTables(IEnumerable<(ExtensionInfo Extension, CommandTable Table)> tables)
+        {
+            var result = new ExtensionCommands();
+            var extensions = new List<ExtensionInfo>();
+            foreach (var (extension, table) in tables)
+            {
+                if (!extensions.Contains(extension))
+                    extensions.Add(extension);
+                result.Add(extension, table);
+            }
+            result.Extensions = extensions;
+            return result;
+        }
 
         /// <summary>The extension that defines the command; false for a command of Visual Studio.</summary>
         public bool TryFind(CommandId id, out ExtensionInfo extension, out CommandDefinition command)
@@ -124,6 +145,8 @@ namespace ShortcutCheatsheet.Origin
                 }
             }
             extension.DefaultKeyBindings += table.KeyBindings.Count;
+            foreach (var binding in table.KeyBindings)
+                _defaultBindings.Add((extension, binding));
         }
 
         /// <summary>Command tables of VS itself, cached per IDE folder for the lifetime of the process.</summary>

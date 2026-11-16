@@ -32,8 +32,14 @@ namespace ShortcutCheatsheet.Model
         /// <summary>You added this shortcut yourself (Tools > Options > Keyboard).</summary>
         [DataMember(Name = "custom", Order = 9, EmitDefaultValue = false)] public bool IsCustom { get; set; }
 
-        /// <summary>Other commands with the same keys in the same scope.</summary>
-        [DataMember(Name = "conflictsWith", Order = 10, EmitDefaultValue = false)] public List<string> ConflictsWith { get; set; }
+        /// <summary>
+        /// A default key binding of an extension that VS did not apply, because the keys were already taken in this
+        /// scope. It is on the sheet to show what the extension wanted; it does not work.
+        /// </summary>
+        [DataMember(Name = "notApplied", Order = 10, EmitDefaultValue = false)] public bool NotApplied { get; set; }
+
+        /// <summary>For a binding that was not applied: the commands that have these keys in this scope.</summary>
+        [DataMember(Name = "usedBy", Order = 11, EmitDefaultValue = false)] public List<string> UsedBy { get; set; }
     }
 
     /// <summary>A summary line per extension.</summary>

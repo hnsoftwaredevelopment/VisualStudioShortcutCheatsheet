@@ -67,6 +67,7 @@
     <Compile Include="Origin\PkgdefPackages.cs" />
     <Compile Include="ImageMonikers.cs" />
     <Compile Include="Model\KeyChord.cs" />
+    <Compile Include="Model\KeyText.cs" />
     <Compile Include="Model\ShortcutView.cs" />
     <Compile Include="ToolWindow\CheatsheetViewModel.cs" />
     <Compile Include="ToolWindow\CheatsheetControl.xaml.cs">

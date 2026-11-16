@@ -19,9 +19,9 @@ namespace ShortcutCheatsheet.Model
         public string Text { get; set; }
         public bool OnlyExtensions { get; set; }
         public bool OnlyCustom { get; set; }
-        public bool OnlyConflicts { get; set; }
+        public bool OnlyNotApplied { get; set; }
 
-        public bool IsEmpty => string.IsNullOrWhiteSpace(Text) && !OnlyExtensions && !OnlyCustom && !OnlyConflicts;
+        public bool IsEmpty => string.IsNullOrWhiteSpace(Text) && !OnlyExtensions && !OnlyCustom && !OnlyNotApplied;
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace ShortcutCheatsheet.Model
                 return false;
             if (filter.OnlyCustom && !shortcut.IsCustom)
                 return false;
-            if (filter.OnlyConflicts && shortcut.ConflictsWith == null)
+            if (filter.OnlyNotApplied && !shortcut.NotApplied)
                 return false;
             if (string.IsNullOrWhiteSpace(filter.Text))
                 return true;
