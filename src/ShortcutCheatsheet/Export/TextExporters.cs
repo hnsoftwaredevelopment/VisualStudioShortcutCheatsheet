@@ -7,11 +7,15 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
+using ShortcutCheatsheet.Localization;
 using ShortcutCheatsheet.Model;
 
 namespace ShortcutCheatsheet.Export
 {
-    /// <summary>One row per shortcut, for Excel. Excel only reads UTF-8 with a BOM and expects the list separator of the culture.</summary>
+    /// <summary>
+    /// One row per shortcut, for Excel. Excel only reads UTF-8 with a BOM and expects the list separator of the culture.
+    /// Column names and values stay English in every language, so formulas and scripts always see the same names.
+    /// </summary>
     internal static class CsvExporter
     {
         public static readonly string[] Columns = { "Scope", "Keys", "Name", "Category", "Command", "Extension", "Custom", "Not applied", "Used by" };
@@ -91,7 +95,8 @@ namespace ShortcutCheatsheet.Export
                 {
                     if (subgroup.Name != null)
                         text.Append("### ").AppendLine(Escape(subgroup.Name)).AppendLine();
-                    text.AppendLine("| Keys | Command | Notes |");
+                    text.Append("| ").Append(Escape(Localizer.Get(Strings.ExportColumnKeys))).Append(" | ").Append(Escape(Localizer.Get(Strings.ExportColumnCommand)))
+                        .Append(" | ").Append(Escape(Localizer.Get(Strings.ExportColumnNotes))).AppendLine(" |");
                     text.AppendLine("| --- | --- | --- |");
                     foreach (var s in subgroup.Shortcuts)
                         text.Append("| ").Append(Keys(s.Keys)).Append(" | ").Append(Escape(s.Name)).Append(" | ").Append(Escape(Notes(s, group.Name))).AppendLine(" |");
@@ -137,7 +142,7 @@ namespace ShortcutCheatsheet.Export
         internal static string Notes(Shortcut s, string groupName) => ExportText.Notes(s, groupName);
     }
 
-    /// <summary>Text that several formats share.</summary>
+    /// <summary>Text that the readable formats share, in the language of the extension.</summary>
     internal static class ExportText
     {
         /// <summary>Extension (unless the group already says so), "yours", and why a binding was not applied.</summary>
@@ -147,7 +152,7 @@ namespace ShortcutCheatsheet.Export
             if (s.Extension != null && s.Extension != groupName && s.Extension != s.Category)
                 parts.Add(s.Extension);
             if (s.IsCustom)
-                parts.Add("yours");
+                parts.Add(Localizer.Get(Strings.Yours));
             if (s.NotApplied)
                 parts.Add(NotAppliedText(s));
             return string.Join(" · ", parts);
@@ -155,7 +160,7 @@ namespace ShortcutCheatsheet.Export
 
         public static string NotAppliedText(Shortcut s) =>
             s.UsedBy != null && s.UsedBy.Count > 0
-                ? "not applied, the keys are used by " + string.Join(", ", s.UsedBy)
-                : "not applied";
+                ? Localizer.Format(Strings.NoteNotAppliedFormat, string.Join(", ", s.UsedBy))
+                : Localizer.Get(Strings.NoteNotApplied);
     }
 }

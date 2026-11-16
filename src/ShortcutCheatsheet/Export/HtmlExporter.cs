@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using ShortcutCheatsheet.Localization;
 using ShortcutCheatsheet.Model;
 
 namespace ShortcutCheatsheet.Export
@@ -16,7 +17,7 @@ namespace ShortcutCheatsheet.Export
         {
             var html = new StringBuilder();
             html.AppendLine("<!DOCTYPE html>");
-            html.AppendLine("<html lang=\"en\">");
+            html.Append("<html lang=\"").Append(E(Localizer.Culture.Name)).AppendLine("\">");
             html.AppendLine("<head>");
             html.AppendLine("<meta charset=\"utf-8\">");
             html.AppendLine("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
@@ -28,7 +29,8 @@ namespace ShortcutCheatsheet.Export
             html.Append("<h1>").Append(E(document.Title)).AppendLine("</h1>");
             if (!string.IsNullOrEmpty(document.Subtitle))
                 html.Append("<p class=\"sub\">").Append(E(document.Subtitle)).AppendLine("</p>");
-            html.AppendLine("<input id=\"q\" type=\"search\" placeholder=\"Search (name, command or keys)\" aria-label=\"Search\" autofocus>");
+            string hint = E(Localizer.Get(Strings.ExportSearchHint));
+            html.Append("<input id=\"q\" type=\"search\" placeholder=\"").Append(hint).Append("\" aria-label=\"").Append(hint).AppendLine("\" autofocus>");
             html.AppendLine("</header>");
             html.AppendLine("<main>");
 
@@ -51,7 +53,7 @@ namespace ShortcutCheatsheet.Export
                 html.AppendLine("</section>");
             }
 
-            html.AppendLine("<p id=\"none\" hidden>No shortcuts match.</p>");
+            html.Append("<p id=\"none\" hidden>").Append(E(Localizer.Get(Strings.ExportNoMatch))).AppendLine("</p>");
             html.AppendLine("</main>");
             html.AppendLine("<script>").Append(Script).AppendLine("</script>");
             html.AppendLine("</body>");

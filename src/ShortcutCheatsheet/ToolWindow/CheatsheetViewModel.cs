@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using System.Windows.Threading;
+using ShortcutCheatsheet.Localization;
 using ShortcutCheatsheet.Model;
 
 namespace ShortcutCheatsheet.ToolWindow
@@ -47,8 +48,10 @@ namespace ShortcutCheatsheet.ToolWindow
 
         /// <summary>"Bookmark Studio wants these keys, but they are used by Build Solution.", for a binding VS did not apply.</summary>
         public string UsedByText => Shortcut.NotApplied
-            ? $"{Shortcut.Extension} wants these keys, but they are used by {string.Join(", ", Shortcut.UsedBy ?? new List<string>())}."
+            ? Localizer.Format(Strings.UsedByFormat, Shortcut.Extension, UsedBy)
             : null;
+
+        private string UsedBy => string.Join(", ", Shortcut.UsedBy ?? new List<string>());
 
         /// <summary>Without groups the scope is not visible elsewhere, so the row shows it.</summary>
         public bool ShowScope { get; }
@@ -68,17 +71,41 @@ namespace ShortcutCheatsheet.ToolWindow
                     lines.Add(Shortcut.Command);
                 lines.Add(Shortcut.Scope + ": " + Shortcut.Keys);
                 if (Shortcut.Extension != null)
-                    lines.Add("From " + Shortcut.Extension);
+                    lines.Add(Localizer.Format(Strings.ToolTipFromFormat, Shortcut.Extension));
                 if (Shortcut.IsCustom)
-                    lines.Add("Added by you");
+                    lines.Add(Localizer.Get(Strings.ToolTipAddedByYou));
                 if (NotApplied)
-                    lines.Add("Not applied: the keys are used by " + string.Join(", ", Shortcut.UsedBy) + ".\nTo use this command, give it other keys in Tools > Options > Environment > Keyboard.");
+                    lines.Add(Localizer.Format(Strings.ToolTipNotAppliedFormat, UsedBy));
                 return string.Join("\n", lines);
             }
         }
 
         /// <summary>One line for the clipboard: "Ctrl+E, V	Duplicate	Text Editor".</summary>
         public string ToClipboardText() => Shortcut.Keys + "\t" + Shortcut.Name + "\t" + Shortcut.Scope;
+    }
+
+    /// <summary>An entry of the grouping list. The label changes with the language, the selected value stays.</summary>
+    internal sealed class GroupingOption : INotifyPropertyChanged
+    {
+        private string _value;
+
+        public GroupingOption(Grouping key)
+        {
+            Key = key;
+            _value = LocalizedEnumConverter<Grouping>.DisplayName(key);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Grouping Key { get; }
+
+        public string Value => _value;
+
+        public void Refresh()
+        {
+            _value = LocalizedEnumConverter<Grouping>.DisplayName(Key);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+        }
     }
 
     /// <summary>State of the window: the sheet, the filter, the grouping, and the list that follows from them.</summary>
@@ -105,13 +132,27 @@ namespace ShortcutCheatsheet.ToolWindow
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public IReadOnlyList<KeyValuePair<Grouping, string>> Groupings { get; } = new[]
+        // Same items with new labels after a language change: a new list would make the ComboBox lose its selection.
+        public IReadOnlyList<GroupingOption> Groupings { get; } =
+            System.Enum.GetValues(typeof(Grouping)).Cast<Grouping>().Select(g => new GroupingOption(g)).ToList();
+
+        private LocalizedTexts _texts = new LocalizedTexts();
+
+        /// <summary>The texts of the window, for {Binding Texts[Name]}.</summary>
+        public LocalizedTexts Texts
         {
-            new KeyValuePair<Grouping, string>(Grouping.Scope, "Where it works"),
-            new KeyValuePair<Grouping, string>(Grouping.Category, "Category"),
-            new KeyValuePair<Grouping, string>(Grouping.Extension, "Extension"),
-            new KeyValuePair<Grouping, string>(Grouping.Keys, "Keys (no groups)"),
-        };
+            get => _texts;
+            private set => Set(ref _texts, value);
+        }
+
+        /// <summary>After a language change: new texts everywhere, including rows, tooltips and the summary.</summary>
+        public void Relocalize()
+        {
+            Texts = new LocalizedTexts();
+            foreach (var option in Groupings)
+                option.Refresh();
+            Rebuild();
+        }
 
         public CheatSheet Sheet
         {
@@ -237,10 +278,10 @@ namespace ShortcutCheatsheet.ToolWindow
         private string DescribeFilter()
         {
             var parts = new List<string>();
-            if (!string.IsNullOrWhiteSpace(_searchText)) parts.Add($"search '{_searchText.Trim()}'");
-            if (_onlyExtensions) parts.Add("only extensions");
-            if (_onlyCustom) parts.Add("only added by you");
-            if (_onlyNotApplied) parts.Add("only not applied");
+            if (!string.IsNullOrWhiteSpace(_searchText)) parts.Add(Localizer.Format(Strings.FilterSearchFormat, _searchText.Trim()));
+            if (_onlyExtensions) parts.Add(Localizer.Get(Strings.FilterOnlyExtensions));
+            if (_onlyCustom) parts.Add(Localizer.Get(Strings.FilterOnlyCustom));
+            if (_onlyNotApplied) parts.Add(Localizer.Get(Strings.FilterOnlyNotApplied));
             return parts.Count == 0 ? null : string.Join(" · ", parts);
         }
 
@@ -253,12 +294,12 @@ namespace ShortcutCheatsheet.ToolWindow
             int custom = working.Count(s => s.IsCustom);
             int notApplied = _sheet.Shortcuts.Count - working.Count;
             // Leave out what is zero: "0 added by you" is noise.
-            var parts = new List<string> { working.Count == 1 ? "1 shortcut" : $"{working.Count} shortcuts" };
-            if (fromExtensions > 0) parts.Add($"{fromExtensions} from {extensions} extensions");
-            if (custom > 0) parts.Add($"{custom} added by you");
-            if (notApplied > 0) parts.Add($"{notApplied} not applied");
-            string text = string.Join(", ", parts) + ".";
-            return shown == _sheet.Shortcuts.Count ? text : text + $" Showing {shown}.";
+            var parts = new List<string> { working.Count == 1 ? Localizer.Get(Strings.SummaryShortcutsOne) : Localizer.Format(Strings.SummaryShortcutsFormat, working.Count) };
+            if (fromExtensions > 0) parts.Add(Localizer.Format(Strings.SummaryFromExtensionsFormat, fromExtensions, extensions));
+            if (custom > 0) parts.Add(Localizer.Format(Strings.SummaryAddedByYouFormat, custom));
+            if (notApplied > 0) parts.Add(Localizer.Format(Strings.SummaryNotAppliedFormat, notApplied));
+            string text = Localizer.Format(Strings.SummaryFormat, string.Join(Localizer.Get(Strings.SummaryListSeparator), parts));
+            return shown == _sheet.Shortcuts.Count ? text : text + " " + Localizer.Format(Strings.SummaryShowingFormat, shown);
         }
 
         private bool Set<T>(ref T field, T value, [CallerMemberName] string name = null)

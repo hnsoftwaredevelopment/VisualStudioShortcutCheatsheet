@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Names of the legacy options page, used by [ProvideOptionPage]. -->
+  <data name="100" xml:space="preserve">
+    <value>Shortcut Cheatsheet</value>
+  </data>
+  <data name="101" xml:space="preserve">
+    <value>Geral</value>
+  </data>
+  <!-- The options (registration.json and the legacy page). -->
+  <data name="OptionsRootDescription" xml:space="preserve">
+    <value>Configurações da janela Shortcut Cheatsheet e das exportações.</value>
+  </data>
+  <data name="OptionsCategoryGeneral" xml:space="preserve">
+    <value>Geral</value>
+  </data>
+  <data name="OptionsCategoryExport" xml:space="preserve">
+    <value>Exportação</value>
+  </data>
+  <data name="OptionsLanguageName" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="OptionsLanguageDescription" xml:space="preserve">
+    <value>Idioma da janela e das exportações. Automático usa o idioma do Visual Studio, ou inglês se a extensão não tiver esse idioma.</value>
+  </data>
+  <data name="LanguageAutomatic" xml:space="preserve">
+    <value>Automático</value>
+  </data>
+  <data name="OptionsGroupingName" xml:space="preserve">
+    <value>Agrupar por</value>
+  </data>
+  <data name="OptionsGroupingDescription" xml:space="preserve">
+    <value>Como a janela agrupa os atalhos ao abrir. Você ainda pode mudar isso na janela.</value>
+  </data>
+  <data name="GroupingScope" xml:space="preserve">
+    <value>Onde funciona</value>
+  </data>
+  <data name="GroupingCategory" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="GroupingExtension" xml:space="preserve">
+    <value>Extensão</value>
+  </data>
+  <data name="GroupingKeys" xml:space="preserve">
+    <value>Teclas (sem grupos)</value>
+  </data>
+  <data name="OptionsPaperName" xml:space="preserve">
+    <value>Tamanho do papel</value>
+  </data>
+  <data name="OptionsPaperDescription" xml:space="preserve">
+    <value>Tamanho da página das exportações PDF e PNG. Automático usa Carta na América do Norte e A4 nos demais lugares, conforme a região do Windows.</value>
+  </data>
+  <data name="PaperChoiceAutomatic" xml:space="preserve">
+    <value>Automático</value>
+  </data>
+  <data name="PaperChoiceA4" xml:space="preserve">
+    <value>A4</value>
+  </data>
+  <data name="PaperChoiceLetter" xml:space="preserve">
+    <value>Carta</value>
+  </data>
+  <data name="OptionsThemeName" xml:space="preserve">
+    <value>Cores</value>
+  </data>
+  <data name="OptionsThemeDescription" xml:space="preserve">
+    <value>Cores das exportações PDF e PNG. Claro é melhor para imprimir; escuro, para ler na tela com um tema escuro.</value>
+  </data>
+  <data name="ExportThemeLight" xml:space="preserve">
+    <value>Claro</value>
+  </data>
+  <data name="ExportThemeDark" xml:space="preserve">
+    <value>Escuro</value>
+  </data>
+  <data name="OptionsColumnsName" xml:space="preserve">
+    <value>Colunas por página</value>
+  </data>
+  <data name="OptionsColumnsDescription" xml:space="preserve">
+    <value>Número de colunas em uma página PDF ou PNG. Menos colunas deixam mais espaço para nomes de comando longos.</value>
+  </data>
+  <!-- The window. -->
+  <data name="WindowSearchLabel" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="WindowSearchHint" xml:space="preserve">
+    <value>Pesquisar por nome ou teclas, como  ctrl+e,v</value>
+  </data>
+  <data name="WindowGroupBy" xml:space="preserve">
+    <value>Agrupar por</value>
+  </data>
+  <data name="WindowRefresh" xml:space="preserve">
+    <value>Atualizar</value>
+  </data>
+  <data name="WindowExport" xml:space="preserve">
+    <value>Exportar...</value>
+  </data>
+  <data name="WindowOnlyExtensions" xml:space="preserve">
+    <value>Somente extensões</value>
+  </data>
+  <data name="WindowOnlyCustom" xml:space="preserve">
+    <value>Somente os seus</value>
+  </data>
+  <data name="WindowOnlyNotApplied" xml:space="preserve">
+    <value>Somente não aplicados</value>
+  </data>
+  <data name="WindowCollecting" xml:space="preserve">
+    <value>Coletando atalhos...</value>
+  </data>
+  <data name="WindowList" xml:space="preserve">
+    <value>Atalhos</value>
+  </data>
+  <data name="Yours" xml:space="preserve">
+    <value>seu</value>
+  </data>
+  <data name="SummaryFormat" xml:space="preserve">
+    <value>{0}.</value>
+  </data>
+  <data name="SummaryListSeparator" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="SummaryShortcutsOne" xml:space="preserve">
+    <value>1 atalho</value>
+  </data>
+  <data name="SummaryShortcutsFormat" xml:space="preserve">
+    <value>{0} atalhos</value>
+  </data>
+  <data name="SummaryFromExtensionsFormat" xml:space="preserve">
+    <value>{0} de {1} extensões</value>
+  </data>
+  <data name="SummaryAddedByYouFormat" xml:space="preserve">
+    <value>{0} adicionados por você</value>
+  </data>
+  <data name="SummaryNotAppliedFormat" xml:space="preserve">
+    <value>{0} não aplicados</value>
+  </data>
+  <data name="SummaryShowingFormat" xml:space="preserve">
+    <value>Mostrando {0}.</value>
+  </data>
+  <data name="UsedByFormat" xml:space="preserve">
+    <value>{0} quer usar estas teclas, mas elas são usadas por {1}.</value>
+  </data>
+  <data name="ToolTipFromFormat" xml:space="preserve">
+    <value>De {0}</value>
+  </data>
+  <data name="ToolTipAddedByYou" xml:space="preserve">
+    <value>Adicionado por você</value>
+  </data>
+  <data name="ToolTipNotAppliedFormat" xml:space="preserve">
+    <value>Não aplicado: as teclas são usadas por {0}.
+Para usar este comando, atribua outras teclas em Tools &gt; Options &gt; Environment &gt; Keyboard.</value>
+  </data>
+  <data name="FilterSearchFormat" xml:space="preserve">
+    <value>pesquisa "{0}"</value>
+  </data>
+  <data name="FilterOnlyExtensions" xml:space="preserve">
+    <value>somente extensões</value>
+  </data>
+  <data name="FilterOnlyCustom" xml:space="preserve">
+    <value>somente os seus</value>
+  </data>
+  <data name="FilterOnlyNotApplied" xml:space="preserve">
+    <value>somente não aplicados</value>
+  </data>
+  <data name="CollectFailed" xml:space="preserve">
+    <value>Não foi possível coletar os atalhos. Clique em Atualizar para tentar novamente.</value>
+  </data>
+  <data name="ExportDialogTitle" xml:space="preserve">
+    <value>Exportar atalhos</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>Atalhos</value>
+  </data>
+  <data name="ExportSavedFormat" xml:space="preserve">
+    <value>{0} salvo.</value>
+  </data>
+  <data name="ExportSavedPagesFormat" xml:space="preserve">
+    <value>{0} páginas salvas: {1} a {2}.</value>
+  </data>
+  <data name="ExportFailedFormat" xml:space="preserve">
+    <value>Falha ao salvar: {0}</value>
+  </data>
+  <data name="FormatPng" xml:space="preserve">
+    <value>Imagem PNG</value>
+  </data>
+  <data name="FormatHtml" xml:space="preserve">
+    <value>Página da web</value>
+  </data>
+  <data name="FormatCsv" xml:space="preserve">
+    <value>CSV para Excel</value>
+  </data>
+  <!-- PDF, PNG, HTML and Markdown exports. JSON, XML and CSV stay English. -->
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Atalhos do Visual Studio</value>
+  </data>
+  <data name="ExportContinuedFormat" xml:space="preserve">
+    <value>{0} (continuação)</value>
+  </data>
+  <data name="ExportFooter" xml:space="preserve">
+    <value>Shortcut Cheatsheet para Visual Studio</value>
+  </data>
+  <data name="ExportSearchHint" xml:space="preserve">
+    <value>Pesquisar (nome, comando ou teclas)</value>
+  </data>
+  <data name="ExportNoMatch" xml:space="preserve">
+    <value>Nenhum atalho encontrado.</value>
+  </data>
+  <data name="ExportColumnKeys" xml:space="preserve">
+    <value>Teclas</value>
+  </data>
+  <data name="ExportColumnCommand" xml:space="preserve">
+    <value>Comando</value>
+  </data>
+  <data name="ExportColumnNotes" xml:space="preserve">
+    <value>Observações</value>
+  </data>
+  <data name="NoteNotApplied" xml:space="preserve">
+    <value>não aplicado</value>
+  </data>
+  <data name="NoteNotAppliedFormat" xml:space="preserve">
+    <value>não aplicado, as teclas são usadas por {0}</value>
+  </data>
+</root>

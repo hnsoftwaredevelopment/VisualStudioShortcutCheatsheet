@@ -77,7 +77,7 @@
                         <imaging:CrispImage Width="16" Height="16" Margin="6,0,0,0" Moniker="{x:Static catalog:KnownMonikers.StatusWarning}"
                                             Visibility="{Binding NotApplied, Converter={StaticResource Visible}}" />
                         <Border Style="{StaticResource Badge}" Visibility="{Binding IsCustom, Converter={StaticResource Visible}}">
-                            <TextBlock Text="yours" FontSize="11" />
+                            <TextBlock Text="{Binding DataContext.Texts[Yours], RelativeSource={RelativeSource AncestorType=ListBox}}" FontSize="11" />
                         </Border>
                         <Border Style="{StaticResource Badge}" Visibility="{Binding ShowExtension, Converter={StaticResource Visible}}">
                             <TextBlock Text="{Binding Extension}" FontSize="11" Opacity="0.85" MaxWidth="100" TextTrimming="CharacterEllipsis" />
@@ -102,9 +102,9 @@
         <!-- Search on its own line, so it keeps its width in a narrow window. -->
         <Grid DockPanel.Dock="Top" Margin="8,8,8,4">
             <TextBox x:Name="Search" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"
-                     MinHeight="22" AutomationProperties.Name="Search"
+                     MinHeight="22" AutomationProperties.Name="{Binding Texts[WindowSearchLabel]}"
                      Style="{DynamicResource {x:Static vsshell:VsResourceKeys.TextBoxStyleKey}}" />
-            <TextBlock Text="Search by name or keys, such as  ctrl+e,v" Margin="6,0,0,0" VerticalAlignment="Center"
+            <TextBlock Text="{Binding Texts[WindowSearchHint]}" Margin="6,0,0,0" VerticalAlignment="Center"
                        IsHitTestVisible="False" Opacity="0.5">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
@@ -121,26 +121,26 @@
 
         <!-- Grouping, buttons and filters: they wrap to the next line when the window is narrow. -->
         <WrapPanel DockPanel.Dock="Top" Margin="8,0,8,4" Orientation="Horizontal">
-            <ComboBox Width="150" Margin="0,0,6,4" ToolTip="Group by" AutomationProperties.Name="Group by"
+            <ComboBox Width="150" Margin="0,0,6,4" ToolTip="{Binding Texts[WindowGroupBy]}" AutomationProperties.Name="{Binding Texts[WindowGroupBy]}"
                       ItemsSource="{Binding Groupings}" DisplayMemberPath="Value" SelectedValuePath="Key"
                       SelectedValue="{Binding Grouping}"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.ComboBoxStyleKey}}" />
-            <Button Content="Refresh" Padding="8,1" Margin="0,0,6,4" Click="Refresh_Click"
+            <Button Content="{Binding Texts[WindowRefresh]}" Padding="8,1" Margin="0,0,6,4" Click="Refresh_Click"
                     Style="{DynamicResource {x:Static vsshell:VsResourceKeys.ButtonStyleKey}}" />
-            <Button Content="Export..." Padding="8,1" Margin="0,0,14,4" Click="Export_Click"
+            <Button Content="{Binding Texts[WindowExport]}" Padding="8,1" Margin="0,0,14,4" Click="Export_Click"
                     Style="{DynamicResource {x:Static vsshell:VsResourceKeys.ButtonStyleKey}}" />
-            <CheckBox Content="Only extensions" IsChecked="{Binding OnlyExtensions}" Margin="0,2,14,4" VerticalAlignment="Center"
+            <CheckBox Content="{Binding Texts[WindowOnlyExtensions]}" IsChecked="{Binding OnlyExtensions}" Margin="0,2,14,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
-            <CheckBox Content="Only added by you" IsChecked="{Binding OnlyCustom}" Visibility="{Binding HasCustom, Converter={StaticResource Visible}}" Margin="0,2,14,4" VerticalAlignment="Center"
+            <CheckBox Content="{Binding Texts[WindowOnlyCustom]}" IsChecked="{Binding OnlyCustom}" Visibility="{Binding HasCustom, Converter={StaticResource Visible}}" Margin="0,2,14,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
-            <CheckBox Content="Only not applied" IsChecked="{Binding OnlyNotApplied}" Visibility="{Binding HasNotApplied, Converter={StaticResource Visible}}" Margin="0,2,0,4" VerticalAlignment="Center"
+            <CheckBox Content="{Binding Texts[WindowOnlyNotApplied]}" IsChecked="{Binding OnlyNotApplied}" Visibility="{Binding HasNotApplied, Converter={StaticResource Visible}}" Margin="0,2,0,4" VerticalAlignment="Center"
                       Style="{DynamicResource {x:Static vsshell:VsResourceKeys.CheckBoxStyleKey}}" />
         </WrapPanel>
 
         <TextBlock DockPanel.Dock="Top" Text="{Binding Summary}" Margin="8,0,8,6" Opacity="0.75" TextWrapping="Wrap" />
 
         <Grid>
-            <ListBox x:Name="List" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource Row}"
+            <ListBox x:Name="List" ItemsSource="{Binding Items}" AutomationProperties.Name="{Binding Texts[WindowList]}" ItemTemplate="{StaticResource Row}"
                      Background="Transparent" BorderThickness="0" SelectionMode="Extended"
                      Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.ToolWindowTextBrushKey}}"
                      VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True"
@@ -194,7 +194,7 @@
                     </GroupStyle>
                 </ListBox.GroupStyle>
             </ListBox>
-            <TextBlock Text="Collecting shortcuts..." HorizontalAlignment="Center" VerticalAlignment="Center"
+            <TextBlock Text="{Binding Texts[WindowCollecting]}" HorizontalAlignment="Center" VerticalAlignment="Center"
                        Visibility="{Binding IsBusy, Converter={StaticResource Visible}}" />
         </Grid>
     </DockPanel>

@@ -30,6 +30,46 @@ namespace ShortcutCheatsheet.Localization
         public const string OptionsColumnsName = nameof(OptionsColumnsName);
         public const string OptionsColumnsDescription = nameof(OptionsColumnsDescription);
 
+        // The window. Texts in the XAML are bound by name through LocalizedTexts, e.g. {Binding Texts[WindowRefresh]}.
+        public const string Yours = nameof(Yours);
+        public const string SummaryFormat = nameof(SummaryFormat);
+        public const string SummaryListSeparator = nameof(SummaryListSeparator);
+        public const string SummaryShortcutsOne = nameof(SummaryShortcutsOne);
+        public const string SummaryShortcutsFormat = nameof(SummaryShortcutsFormat);
+        public const string SummaryFromExtensionsFormat = nameof(SummaryFromExtensionsFormat);
+        public const string SummaryAddedByYouFormat = nameof(SummaryAddedByYouFormat);
+        public const string SummaryNotAppliedFormat = nameof(SummaryNotAppliedFormat);
+        public const string SummaryShowingFormat = nameof(SummaryShowingFormat);
+        public const string UsedByFormat = nameof(UsedByFormat);
+        public const string ToolTipFromFormat = nameof(ToolTipFromFormat);
+        public const string ToolTipAddedByYou = nameof(ToolTipAddedByYou);
+        public const string ToolTipNotAppliedFormat = nameof(ToolTipNotAppliedFormat);
+        public const string FilterSearchFormat = nameof(FilterSearchFormat);
+        public const string FilterOnlyExtensions = nameof(FilterOnlyExtensions);
+        public const string FilterOnlyCustom = nameof(FilterOnlyCustom);
+        public const string FilterOnlyNotApplied = nameof(FilterOnlyNotApplied);
+        public const string CollectFailed = nameof(CollectFailed);
+        public const string ExportDialogTitle = nameof(ExportDialogTitle);
+        public const string ExportFileName = nameof(ExportFileName);
+        public const string ExportSavedFormat = nameof(ExportSavedFormat);
+        public const string ExportSavedPagesFormat = nameof(ExportSavedPagesFormat);
+        public const string ExportFailedFormat = nameof(ExportFailedFormat);
+        public const string FormatPng = nameof(FormatPng);
+        public const string FormatHtml = nameof(FormatHtml);
+        public const string FormatCsv = nameof(FormatCsv);
+
+        // The readable exports (PDF, PNG, HTML, Markdown). JSON, XML and CSV stay English for scripts and formulas.
+        public const string ExportTitle = nameof(ExportTitle);
+        public const string ExportContinuedFormat = nameof(ExportContinuedFormat);
+        public const string ExportFooter = nameof(ExportFooter);
+        public const string ExportSearchHint = nameof(ExportSearchHint);
+        public const string ExportNoMatch = nameof(ExportNoMatch);
+        public const string ExportColumnKeys = nameof(ExportColumnKeys);
+        public const string ExportColumnCommand = nameof(ExportColumnCommand);
+        public const string ExportColumnNotes = nameof(ExportColumnNotes);
+        public const string NoteNotApplied = nameof(NoteNotApplied);
+        public const string NoteNotAppliedFormat = nameof(NoteNotAppliedFormat);
+
         // Enum values are the enum type name plus the value name ("GroupingScope", "PaperChoiceA4"); see LocalizedEnumConverter.
     }
 
@@ -80,6 +120,15 @@ namespace ShortcutCheatsheet.Localization
             }
             return LanguageInfo.MatchVisualStudioLanguage(CultureInfo.CurrentUICulture);
         }
+    }
+
+    /// <summary>
+    /// Texts for XAML bindings by resource name: {Binding Texts[WindowRefresh]}. After a language change the view
+    /// model sets a new instance, and WPF reads every text again.
+    /// </summary>
+    internal sealed class LocalizedTexts
+    {
+        public string this[string name] => Localizer.Get(name);
     }
 
     // The standard attributes only take constant strings. These look the text up when the options PropertyGrid

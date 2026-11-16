@@ -102,6 +102,21 @@
       <LogicalName>VSPackage.resources</LogicalName>
       <MergeWithCTO>true</MergeWithCTO>
     </EmbeddedResource>
+    <!-- Translations: satellite assemblies (nl\ShortcutCheatsheet.resources.dll, ...), also named VSPackage. -->
+    <EmbeddedResource Include="Localization\Strings.cs.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.cs.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.de.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.de.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.es.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.es.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.fr.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.fr.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.it.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.it.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.ja.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.ja.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.ko.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.ko.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.nl.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.nl.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.pl.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.pl.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.pt-BR.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.pt-BR.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.ru.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.ru.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.tr.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.tr.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.zh-Hans.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.zh-Hans.resources</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Localization\Strings.zh-Hant.resx"><DependentUpon>Strings.resx</DependentUpon><LogicalName>VSPackage.zh-Hant.resources</LogicalName></EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="ShortcutCheatsheetPackage.vsct">

@@ -41,13 +41,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <!-- 100 and 101: names of the legacy options page, used by [ProvideOptionPage]. -->
+  <!-- Names of the legacy options page, used by [ProvideOptionPage]. -->
   <data name="100" xml:space="preserve">
     <value>Shortcut Cheatsheet</value>
   </data>
   <data name="101" xml:space="preserve">
     <value>General</value>
   </data>
+  <!-- The options (registration.json and the legacy page). -->
   <data name="OptionsRootDescription" xml:space="preserve">
     <value>Settings for the Shortcut Cheatsheet window and its exports.</value>
   </data>
@@ -116,5 +117,146 @@
   </data>
   <data name="OptionsColumnsDescription" xml:space="preserve">
     <value>Number of columns on a PDF or PNG page. Fewer columns leave more room for long command names.</value>
+  </data>
+  <!-- The window. -->
+  <data name="WindowSearchLabel" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="WindowSearchHint" xml:space="preserve">
+    <value>Search by name or keys, such as  ctrl+e,v</value>
+  </data>
+  <data name="WindowGroupBy" xml:space="preserve">
+    <value>Group by</value>
+  </data>
+  <data name="WindowRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="WindowExport" xml:space="preserve">
+    <value>Export...</value>
+  </data>
+  <data name="WindowOnlyExtensions" xml:space="preserve">
+    <value>Only extensions</value>
+  </data>
+  <data name="WindowOnlyCustom" xml:space="preserve">
+    <value>Only added by you</value>
+  </data>
+  <data name="WindowOnlyNotApplied" xml:space="preserve">
+    <value>Only not applied</value>
+  </data>
+  <data name="WindowCollecting" xml:space="preserve">
+    <value>Collecting shortcuts...</value>
+  </data>
+  <data name="WindowList" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="Yours" xml:space="preserve">
+    <value>yours</value>
+  </data>
+  <data name="SummaryFormat" xml:space="preserve">
+    <value>{0}.</value>
+  </data>
+  <data name="SummaryListSeparator" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="SummaryShortcutsOne" xml:space="preserve">
+    <value>1 shortcut</value>
+  </data>
+  <data name="SummaryShortcutsFormat" xml:space="preserve">
+    <value>{0} shortcuts</value>
+  </data>
+  <data name="SummaryFromExtensionsFormat" xml:space="preserve">
+    <value>{0} from {1} extensions</value>
+  </data>
+  <data name="SummaryAddedByYouFormat" xml:space="preserve">
+    <value>{0} added by you</value>
+  </data>
+  <data name="SummaryNotAppliedFormat" xml:space="preserve">
+    <value>{0} not applied</value>
+  </data>
+  <data name="SummaryShowingFormat" xml:space="preserve">
+    <value>Showing {0}.</value>
+  </data>
+  <data name="UsedByFormat" xml:space="preserve">
+    <value>{0} wants these keys, but they are used by {1}.</value>
+  </data>
+  <data name="ToolTipFromFormat" xml:space="preserve">
+    <value>From {0}</value>
+  </data>
+  <data name="ToolTipAddedByYou" xml:space="preserve">
+    <value>Added by you</value>
+  </data>
+  <data name="ToolTipNotAppliedFormat" xml:space="preserve">
+    <value>Not applied: the keys are used by {0}.
+To use this command, give it other keys in Tools &gt; Options &gt; Environment &gt; Keyboard.</value>
+  </data>
+  <data name="FilterSearchFormat" xml:space="preserve">
+    <value>search '{0}'</value>
+  </data>
+  <data name="FilterOnlyExtensions" xml:space="preserve">
+    <value>only extensions</value>
+  </data>
+  <data name="FilterOnlyCustom" xml:space="preserve">
+    <value>only added by you</value>
+  </data>
+  <data name="FilterOnlyNotApplied" xml:space="preserve">
+    <value>only not applied</value>
+  </data>
+  <data name="CollectFailed" xml:space="preserve">
+    <value>The shortcuts could not be collected. Click Refresh to try again.</value>
+  </data>
+  <data name="ExportDialogTitle" xml:space="preserve">
+    <value>Export shortcuts</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="ExportSavedFormat" xml:space="preserve">
+    <value>Saved {0}.</value>
+  </data>
+  <data name="ExportSavedPagesFormat" xml:space="preserve">
+    <value>Saved {0} pages: {1} to {2}.</value>
+  </data>
+  <data name="ExportFailedFormat" xml:space="preserve">
+    <value>Saving failed: {0}</value>
+  </data>
+  <data name="FormatPng" xml:space="preserve">
+    <value>PNG image</value>
+  </data>
+  <data name="FormatHtml" xml:space="preserve">
+    <value>Web page</value>
+  </data>
+  <data name="FormatCsv" xml:space="preserve">
+    <value>CSV for Excel</value>
+  </data>
+  <!-- PDF, PNG, HTML and Markdown exports. JSON, XML and CSV stay English. -->
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Visual Studio shortcuts</value>
+  </data>
+  <data name="ExportContinuedFormat" xml:space="preserve">
+    <value>{0} (continued)</value>
+  </data>
+  <data name="ExportFooter" xml:space="preserve">
+    <value>Shortcut Cheatsheet for Visual Studio</value>
+  </data>
+  <data name="ExportSearchHint" xml:space="preserve">
+    <value>Search (name, command or keys)</value>
+  </data>
+  <data name="ExportNoMatch" xml:space="preserve">
+    <value>No shortcuts match.</value>
+  </data>
+  <data name="ExportColumnKeys" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="ExportColumnCommand" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="ExportColumnNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NoteNotApplied" xml:space="preserve">
+    <value>not applied</value>
+  </data>
+  <data name="NoteNotAppliedFormat" xml:space="preserve">
+    <value>not applied, the keys are used by {0}</value>
   </data>
 </root>

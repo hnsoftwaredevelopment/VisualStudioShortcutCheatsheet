@@ -37,9 +37,7 @@ namespace ShortcutCheatsheet.Export
     /// </summary>
     internal sealed class ExportDocument
     {
-        public const string DefaultTitle = "Visual Studio shortcuts";
-
-        public string Title { get; set; } = DefaultTitle;
+        public string Title { get; set; }
 
         /// <summary>"Community 18.0 · 13 November 2026 · only extensions".</summary>
         public string Subtitle { get; set; }
@@ -84,6 +82,7 @@ namespace ShortcutCheatsheet.Export
 
             return new ExportDocument
             {
+                Title = Localization.Localizer.Get(Localization.Strings.ExportTitle),
                 Subtitle = string.Join(" · ", parts),
                 Groups = groups,
                 Sheet = new CheatSheet

@@ -49,15 +49,17 @@ namespace ShortcutCheatsheet.Options
             _package = package;
 
             // Null when Unified Settings does not exist. Analyzer VSSDK006 requires the null check.
-            _settingsManager = await package.GetServiceAsync(typeof(SVsUnifiedSettingsManager)) as ISettingsManager;
+            // The analyzer only sees the null check on a local variable, not on the field.
+            var settingsManager = await package.GetServiceAsync(typeof(SVsUnifiedSettingsManager)) as ISettingsManager;
+            _settingsManager = settingsManager;
 
             await package.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             Reload();
 
-            if (_settingsManager != null)
+            if (settingsManager != null)
             {
                 // The callback thread is not guaranteed, so the handler switches to the UI thread.
-                Subscription = _settingsManager.GetReader().SubscribeToChanges(OnUnifiedSettingsChanged, SettingMonikers.All);
+                Subscription = settingsManager.GetReader().SubscribeToChanges(OnUnifiedSettingsChanged, SettingMonikers.All);
             }
         }
 

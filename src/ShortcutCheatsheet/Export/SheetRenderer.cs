@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ShortcutCheatsheet.Localization;
 using ShortcutCheatsheet.Model;
 
 namespace ShortcutCheatsheet.Export
@@ -305,9 +306,8 @@ namespace ShortcutCheatsheet.Export
                     var block = blocks[i];
                     if (!block.IsGroupHeading && block.Group != null)
                     {
-                        block.Continued = block.IsRow && block.Subgroup != null
-                            ? block.Group + " · " + block.Subgroup + " (continued)"
-                            : block.Group + " (continued)";
+                        block.Continued = Localizer.Format(Strings.ExportContinuedFormat,
+                            block.IsRow && block.Subgroup != null ? block.Group + " · " + block.Subgroup : block.Group);
                         y += ContinuedHeight;
                     }
                 }
@@ -336,7 +336,7 @@ namespace ShortcutCheatsheet.Export
 
             var footer = text.Create(string.Format(CultureInfo.InvariantCulture, "{0} / {1}", index + 1, count), 9, theme.Muted);
             dc.DrawText(footer, new Point(page.Width - Margin - footer.Width, page.Height - Margin + 4));
-            dc.DrawText(text.Create("Shortcut Cheatsheet for Visual Studio", 9, theme.Muted), new Point(Margin, page.Height - Margin + 4));
+            dc.DrawText(text.Create(Localizer.Get(Strings.ExportFooter), 9, theme.Muted), new Point(Margin, page.Height - Margin + 4));
         }
 
         /// <summary>FormattedText with the same font everywhere.</summary>
@@ -350,7 +350,7 @@ namespace ShortcutCheatsheet.Export
             public FormattedText Create(string value, double size, Brush brush, bool bold = false, bool italic = false, double maxWidth = 0)
             {
                 var typeface = new Typeface(Family, italic ? FontStyles.Italic : FontStyles.Normal, bold ? FontWeights.SemiBold : FontWeights.Normal, FontStretches.Normal);
-                var text = new FormattedText(value ?? string.Empty, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, typeface, size, brush ?? Brushes.Black, _pixelsPerDip);
+                var text = new FormattedText(value ?? string.Empty, Localizer.Culture, FlowDirection.LeftToRight, typeface, size, brush ?? Brushes.Black, _pixelsPerDip);
                 if (maxWidth > 0)
                 {
                     text.MaxTextWidth = maxWidth;

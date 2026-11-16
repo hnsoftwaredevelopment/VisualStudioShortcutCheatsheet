@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Names of the legacy options page, used by [ProvideOptionPage]. -->
+  <data name="100" xml:space="preserve">
+    <value>Shortcut Cheatsheet</value>
+  </data>
+  <data name="101" xml:space="preserve">
+    <value>全般</value>
+  </data>
+  <!-- The options (registration.json and the legacy page). -->
+  <data name="OptionsRootDescription" xml:space="preserve">
+    <value>Shortcut Cheatsheet ウィンドウとエクスポートの設定です。</value>
+  </data>
+  <data name="OptionsCategoryGeneral" xml:space="preserve">
+    <value>全般</value>
+  </data>
+  <data name="OptionsCategoryExport" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
+  <data name="OptionsLanguageName" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="OptionsLanguageDescription" xml:space="preserve">
+    <value>ウィンドウとエクスポートの言語です。自動では Visual Studio の言語を使い、拡張機能にその言語がない場合は英語を使います。</value>
+  </data>
+  <data name="LanguageAutomatic" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="OptionsGroupingName" xml:space="preserve">
+    <value>グループ化</value>
+  </data>
+  <data name="OptionsGroupingDescription" xml:space="preserve">
+    <value>ウィンドウを開いたときのショートカットのグループ化方法です。ウィンドウ内でいつでも変更できます。</value>
+  </data>
+  <data name="GroupingScope" xml:space="preserve">
+    <value>有効な場所</value>
+  </data>
+  <data name="GroupingCategory" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="GroupingExtension" xml:space="preserve">
+    <value>拡張機能</value>
+  </data>
+  <data name="GroupingKeys" xml:space="preserve">
+    <value>キー (グループなし)</value>
+  </data>
+  <data name="OptionsPaperName" xml:space="preserve">
+    <value>用紙サイズ</value>
+  </data>
+  <data name="OptionsPaperDescription" xml:space="preserve">
+    <value>PDF と PNG のエクスポートのページ サイズです。自動では Windows の地域に従い、北米ではレター、その他では A4 を使います。</value>
+  </data>
+  <data name="PaperChoiceAutomatic" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="PaperChoiceA4" xml:space="preserve">
+    <value>A4</value>
+  </data>
+  <data name="PaperChoiceLetter" xml:space="preserve">
+    <value>レター</value>
+  </data>
+  <data name="OptionsThemeName" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="OptionsThemeDescription" xml:space="preserve">
+    <value>PDF と PNG のエクスポートの色です。印刷には明るい色、ダーク テーマの画面で読むには暗い色が適しています。</value>
+  </data>
+  <data name="ExportThemeLight" xml:space="preserve">
+    <value>明るい</value>
+  </data>
+  <data name="ExportThemeDark" xml:space="preserve">
+    <value>暗い</value>
+  </data>
+  <data name="OptionsColumnsName" xml:space="preserve">
+    <value>ページあたりの列数</value>
+  </data>
+  <data name="OptionsColumnsDescription" xml:space="preserve">
+    <value>PDF または PNG の 1 ページの列数です。列を減らすと、長いコマンド名に使える幅が広がります。</value>
+  </data>
+  <!-- The window. -->
+  <data name="WindowSearchLabel" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="WindowSearchHint" xml:space="preserve">
+    <value>名前またはキーで検索 (例:  ctrl+e,v)</value>
+  </data>
+  <data name="WindowGroupBy" xml:space="preserve">
+    <value>グループ化</value>
+  </data>
+  <data name="WindowRefresh" xml:space="preserve">
+    <value>最新の情報に更新</value>
+  </data>
+  <data name="WindowExport" xml:space="preserve">
+    <value>エクスポート...</value>
+  </data>
+  <data name="WindowOnlyExtensions" xml:space="preserve">
+    <value>拡張機能のみ</value>
+  </data>
+  <data name="WindowOnlyCustom" xml:space="preserve">
+    <value>自分で追加したもののみ</value>
+  </data>
+  <data name="WindowOnlyNotApplied" xml:space="preserve">
+    <value>適用されていないもののみ</value>
+  </data>
+  <data name="WindowCollecting" xml:space="preserve">
+    <value>ショートカットを収集しています...</value>
+  </data>
+  <data name="WindowList" xml:space="preserve">
+    <value>ショートカット</value>
+  </data>
+  <data name="Yours" xml:space="preserve">
+    <value>自分</value>
+  </data>
+  <data name="SummaryFormat" xml:space="preserve">
+    <value>{0}。</value>
+  </data>
+  <data name="SummaryListSeparator" xml:space="preserve">
+    <value>、</value>
+  </data>
+  <data name="SummaryShortcutsOne" xml:space="preserve">
+    <value>ショートカット 1 件</value>
+  </data>
+  <data name="SummaryShortcutsFormat" xml:space="preserve">
+    <value>ショートカット {0} 件</value>
+  </data>
+  <data name="SummaryFromExtensionsFormat" xml:space="preserve">
+    <value>{1} 個の拡張機能から {0} 件</value>
+  </data>
+  <data name="SummaryAddedByYouFormat" xml:space="preserve">
+    <value>自分で追加 {0} 件</value>
+  </data>
+  <data name="SummaryNotAppliedFormat" xml:space="preserve">
+    <value>未適用 {0} 件</value>
+  </data>
+  <data name="SummaryShowingFormat" xml:space="preserve">
+    <value>{0} 件を表示。</value>
+  </data>
+  <data name="UsedByFormat" xml:space="preserve">
+    <value>{0} はこのキーを使用しようとしていますが、{1} が使用しています。</value>
+  </data>
+  <data name="ToolTipFromFormat" xml:space="preserve">
+    <value>提供元: {0}</value>
+  </data>
+  <data name="ToolTipAddedByYou" xml:space="preserve">
+    <value>自分で追加</value>
+  </data>
+  <data name="ToolTipNotAppliedFormat" xml:space="preserve">
+    <value>未適用: このキーは {0} が使用しています。
+このコマンドを使うには、Tools &gt; Options &gt; Environment &gt; Keyboard で別のキーを割り当ててください。</value>
+  </data>
+  <data name="FilterSearchFormat" xml:space="preserve">
+    <value>検索「{0}」</value>
+  </data>
+  <data name="FilterOnlyExtensions" xml:space="preserve">
+    <value>拡張機能のみ</value>
+  </data>
+  <data name="FilterOnlyCustom" xml:space="preserve">
+    <value>自分で追加したもののみ</value>
+  </data>
+  <data name="FilterOnlyNotApplied" xml:space="preserve">
+    <value>未適用のみ</value>
+  </data>
+  <data name="CollectFailed" xml:space="preserve">
+    <value>ショートカットを収集できませんでした。[最新の情報に更新] をクリックして、もう一度お試しください。</value>
+  </data>
+  <data name="ExportDialogTitle" xml:space="preserve">
+    <value>ショートカットのエクスポート</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>ショートカット</value>
+  </data>
+  <data name="ExportSavedFormat" xml:space="preserve">
+    <value>{0} を保存しました。</value>
+  </data>
+  <data name="ExportSavedPagesFormat" xml:space="preserve">
+    <value>{0} ページを保存しました: {1} ～ {2}。</value>
+  </data>
+  <data name="ExportFailedFormat" xml:space="preserve">
+    <value>保存できませんでした: {0}</value>
+  </data>
+  <data name="FormatPng" xml:space="preserve">
+    <value>PNG 画像</value>
+  </data>
+  <data name="FormatHtml" xml:space="preserve">
+    <value>Web ページ</value>
+  </data>
+  <data name="FormatCsv" xml:space="preserve">
+    <value>Excel 用 CSV</value>
+  </data>
+  <!-- PDF, PNG, HTML and Markdown exports. JSON, XML and CSV stay English. -->
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Visual Studio のショートカット</value>
+  </data>
+  <data name="ExportContinuedFormat" xml:space="preserve">
+    <value>{0} (続き)</value>
+  </data>
+  <data name="ExportFooter" xml:space="preserve">
+    <value>Shortcut Cheatsheet for Visual Studio</value>
+  </data>
+  <data name="ExportSearchHint" xml:space="preserve">
+    <value>検索 (名前、コマンド、キー)</value>
+  </data>
+  <data name="ExportNoMatch" xml:space="preserve">
+    <value>一致するショートカットはありません。</value>
+  </data>
+  <data name="ExportColumnKeys" xml:space="preserve">
+    <value>キー</value>
+  </data>
+  <data name="ExportColumnCommand" xml:space="preserve">
+    <value>コマンド</value>
+  </data>
+  <data name="ExportColumnNotes" xml:space="preserve">
+    <value>備考</value>
+  </data>
+  <data name="NoteNotApplied" xml:space="preserve">
+    <value>未適用</value>
+  </data>
+  <data name="NoteNotAppliedFormat" xml:space="preserve">
+    <value>未適用、このキーは {0} が使用しています</value>
+  </data>
+</root>

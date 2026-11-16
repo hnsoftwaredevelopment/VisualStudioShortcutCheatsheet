@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
 using ShortcutCheatsheet.Collecting;
 using ShortcutCheatsheet.Export;
+using ShortcutCheatsheet.Localization;
 using ShortcutCheatsheet.Options;
 using Task = System.Threading.Tasks.Task;
 
@@ -41,9 +42,20 @@ namespace ShortcutCheatsheet.ToolWindow
         /// <summary>The grouping from the options, to see whether that setting changed.</summary>
         private Model.Grouping _grouping;
 
-        /// <summary>A new default grouping in the options also applies to the open window; other changes leave it alone.</summary>
+        /// <summary>The language the texts are in now.</summary>
+        private System.Globalization.CultureInfo _culture = Localizer.Culture;
+
+        /// <summary>
+        /// A new language changes all texts at once. A new default grouping also applies to the open window; a grouping
+        /// chosen in the window stays while the setting is the same.
+        /// </summary>
         private void OnSettingsChanged(object sender, EventArgs e)
         {
+            if (!Equals(_culture, Localizer.Culture))
+            {
+                _culture = Localizer.Culture;
+                _model.Relocalize();
+            }
             var grouping = SettingsService.Current.Grouping;
             if (grouping == _grouping)
                 return;
@@ -94,7 +106,7 @@ namespace ShortcutCheatsheet.ToolWindow
             {
                 await _package.JoinableTaskFactory.SwitchToMainThreadAsync();
                 ActivityLog.TryLogError("Shortcut Cheatsheet", "Collecting shortcuts failed: " + ex);
-                _model.Summary = "The shortcuts could not be collected. Click Refresh to try again.";
+                _model.Summary = Localizer.Get(Strings.CollectFailed);
             }
             finally
             {
@@ -114,8 +126,8 @@ namespace ShortcutCheatsheet.ToolWindow
                 return;
             var dialog = new Microsoft.Win32.SaveFileDialog
             {
-                Title = "Export shortcuts",
-                FileName = "Shortcuts",
+                Title = Localizer.Get(Strings.ExportDialogTitle),
+                FileName = Localizer.Get(Strings.ExportFileName),
                 Filter = Exporter.DialogFilter,
                 FilterIndex = _formatIndex,
                 AddExtension = true,
@@ -133,13 +145,13 @@ namespace ShortcutCheatsheet.ToolWindow
             {
                 var files = Exporter.Write(document, format, path, SettingsService.Current.ToRenderOptions());
                 _model.Summary = files.Count == 1
-                    ? "Saved " + Path.GetFileName(files[0]) + "."
-                    : $"Saved {files.Count} pages: {Path.GetFileName(files[0])} to {Path.GetFileName(files[files.Count - 1])}.";
+                    ? Localizer.Format(Strings.ExportSavedFormat, Path.GetFileName(files[0]))
+                    : Localizer.Format(Strings.ExportSavedPagesFormat, files.Count, Path.GetFileName(files[0]), Path.GetFileName(files[files.Count - 1]));
             }
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
                 // The user chose the file, so this is something they can act on.
-                _model.Summary = "Saving failed: " + ex.Message;
+                _model.Summary = Localizer.Format(Strings.ExportFailedFormat, ex.Message);
             }
         }
     }

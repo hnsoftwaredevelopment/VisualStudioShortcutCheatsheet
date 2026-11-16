@@ -250,6 +250,18 @@ namespace ShortcutCheatsheet.Tests
                 var extensions = ExportDocument.Create(sheet, new ShortcutFilter { OnlyExtensions = true }, Grouping.Extension, "only extensions", Now);
                 Exporter.Write(extensions, ExportFormat.Png, Path.Combine(folder, "Extensions.png"), new RenderOptions());
                 Exporter.Write(extensions, ExportFormat.Png, Path.Combine(folder, "Extensions-dark.png"), new RenderOptions { Dark = true });
+
+                // Japanese: the texts from the satellite and characters Segoe UI does not have (WPF falls back to another font).
+                try
+                {
+                    Localization.Localizer.SetCulture(System.Globalization.CultureInfo.GetCultureInfo("ja"));
+                    var japanese = ExportDocument.Create(sheet, new ShortcutFilter { OnlyExtensions = true }, Grouping.Extension, null, Now);
+                    Exporter.Write(japanese, ExportFormat.Png, Path.Combine(folder, "Extensions-ja.png"), new RenderOptions { Columns = 2 });
+                }
+                finally
+                {
+                    Localization.Localizer.SetCulture(System.Globalization.CultureInfo.GetCultureInfo("en"));
+                }
             });
         }
 
